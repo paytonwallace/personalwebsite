@@ -5,6 +5,7 @@ import { useReveal } from "@/hooks/useReveal";
 import type { SectionProps, Page } from "@/app/page";
 import Image from "next/image";
 import { useState, useEffect, useRef, KeyboardEvent } from "react";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const s = (i: number) => ({ duration: 0.4, delay: 0.04 + i * 0.1, ease: "easeOut" as const });
 
@@ -184,7 +185,7 @@ function NavBar({ onNavigate }: { onNavigate: (page: Page) => void }) {
   };
 
   return (
-    <div style={{
+    <div className="hero-nav-bar" style={{
       borderTop: "1px solid var(--border)",
       padding: "10px 56px",
       display: "flex",
@@ -259,6 +260,7 @@ function NavBar({ onNavigate }: { onNavigate: (page: Page) => void }) {
 // ── Hero ──────────────────────────────────────────────────────────────────────
 export default function Hero({ isActive, onNavigate }: SectionProps) {
   const revealed  = useReveal(isActive, 50);
+  const isMobile  = useIsMobile();
   const [lineIdx, setLineIdx]   = useState(0);
   const [hasPhoto, setHasPhoto] = useState(false);
   const [showForm, setShowForm] = useState(false);
@@ -288,12 +290,12 @@ export default function Hero({ isActive, onNavigate }: SectionProps) {
       <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, var(--text) 1px, transparent 1px)", backgroundSize: "28px 28px", opacity: 0.03, pointerEvents: "none" }} />
 
       {/* Main area */}
-      <div style={{ flex: 1, padding: "16px 56px 8px", position: "relative", overflow: "hidden", display: "flex", flexDirection: "column" }}>
+      <div className="hero-main-pad" style={{ flex: 1, padding: "16px 56px 8px", position: "relative", overflow: "hidden", display: "flex", flexDirection: "column" }}>
         {revealed && (
-          <div style={{ display: "flex", gap: "56px", alignItems: "center", flex: 1, minHeight: 0 }}>
+          <div className="hero-cols" style={{ display: "flex", gap: "56px", alignItems: "center", flex: 1, minHeight: 0 }}>
 
             {/* LEFT */}
-            <div style={{ flex: 1, minWidth: "280px", display: "flex", flexDirection: "column" }}>
+            <div style={{ flex: 1, minWidth: isMobile ? "0" : "280px", display: "flex", flexDirection: "column" }}>
 
               <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={s(0)}
                 style={{ fontFamily: "var(--font-geist-mono)", fontSize: "11px", color: "var(--text-faint)", marginBottom: "14px" }}>
@@ -336,7 +338,7 @@ export default function Hero({ isActive, onNavigate }: SectionProps) {
             </div>
 
             {/* RIGHT — image toggles to form */}
-            <motion.div initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.2 }}
+            <motion.div className="hero-photo" initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.2 }}
               style={{ flexShrink: 0, width: "260px" }}>
 
               <AnimatePresence mode="wait">

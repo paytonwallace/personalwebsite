@@ -48,7 +48,7 @@ export default function About({ isActive }: SectionProps) {
     <>
       <GROWTHModal open={growthOpen} onClose={() => setGrowthOpen(false)} />
 
-      <section id="about" className="site-section" style={{ minHeight: "100vh", padding: "64px 56px", borderBottom: "1px solid var(--border)" }}>
+      <section id="about" className="site-section section-pad" style={{ minHeight: "100vh", padding: "64px 56px", borderBottom: "1px solid var(--border)" }}>
         {revealed && (
           <div style={{ maxWidth: "720px" }}>
 

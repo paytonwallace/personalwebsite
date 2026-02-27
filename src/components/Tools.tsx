@@ -248,7 +248,7 @@ export default function Tools({ isActive }: SectionProps) {
   }, [isActive]);
 
   return (
-    <section id="tools" className="site-section" style={{ minHeight: "100vh", padding: scanDone ? "64px 56px" : "0", borderBottom: "1px solid var(--border)" }}>
+    <section id="tools" className="site-section section-pad" style={{ minHeight: "100vh", padding: scanDone ? "64px 56px" : "0", borderBottom: "1px solid var(--border)" }}>
       {revealTriggered && !scanDone && <ToolsLoadAnimation onDone={() => setScanDone(true)} />}
 
       {scanDone && (

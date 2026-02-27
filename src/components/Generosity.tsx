@@ -155,7 +155,7 @@ export default function Generosity({ isActive }: SectionProps) {
       {/* Content */}
       {globeDone && (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}
-          style={{ padding: "64px 56px" }}>
+          className="section-pad" style={{ padding: "64px 56px" }}>
           <div style={{ maxWidth: "720px" }}>
 
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}

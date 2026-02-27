@@ -307,7 +307,7 @@ export default function LifeMd({ isActive }: SectionProps) {
 
       {hackDone && (
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }}
-          style={{ padding: "64px 56px" }}>
+          className="section-pad" style={{ padding: "64px 56px" }}>
           <div style={{ maxWidth: "720px" }}>
 
             <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "11px", color: "var(--text-faint)", marginBottom: "32px" }}>

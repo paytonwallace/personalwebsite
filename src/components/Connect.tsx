@@ -208,7 +208,7 @@ export default function Connect({ isActive }: SectionProps) {
   }, []);
 
   return (
-    <section id="connect" style={{ minHeight: "100vh", padding: "64px 56px", borderBottom: "1px solid var(--border)" }}>
+    <section id="connect" className="section-pad" style={{ minHeight: "100vh", padding: "64px 56px", borderBottom: "1px solid var(--border)" }}>
       {revealed && (
         <div style={{ maxWidth: "720px" }}>
 

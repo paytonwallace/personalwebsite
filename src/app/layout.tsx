@@ -26,9 +26,24 @@ export const metadata: Metadata = {
     "CEO Mentor & Strategic Architect. Helping faith-driven founders scale to 7-8 figures.",
   openGraph: {
     title: "Payton Wallace",
-    description: "CEO Mentor & Strategic Architect.",
+    description: "CEO Mentor & Strategic Architect. Helping faith-driven founders scale to 7-8 figures.",
     url: "https://paytonwallace.com",
     siteName: "Payton Wallace",
+    images: [
+      {
+        url: "https://paytonwallace.com/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Payton Wallace",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Payton Wallace",
+    description: "CEO Mentor & Strategic Architect. Helping faith-driven founders scale to 7-8 figures.",
+    images: ["https://paytonwallace.com/og-image.jpg"],
   },
 };
 

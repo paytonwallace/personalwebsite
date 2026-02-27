@@ -1,26 +1,95 @@
 @import "tailwindcss";
 
+* { box-sizing: border-box; padding: 0; margin: 0; cursor: none !important; }
+html { scroll-behavior: smooth; }
+
+/* ── LIGHT MODE ─────────────────────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg:              #ffffff;
+  --bg-surface:      #f5f5f5;
+  --bg-surface-hover:#ebebeb;
+  --text:            #0a0a0a;
+  --text-muted:      #525252;
+  --text-faint:      #999999;
+  --border:          #e0e0e0;
+  --border-hover:    #aaaaaa;
+  --yellow:          rgba(253, 224, 71, 0.3);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ── DARK MODE ──────────────────────────────────────────────────────────── */
+.dark {
+  --bg:              #050505;
+  --bg-surface:      #0e0e0e;
+  --bg-surface-hover:#1a1a1a;
+  --text:            #f0f0f0;
+  --text-muted:      #a8a8a8;   /* was #888 — now readable */
+  --text-faint:      #6a6a6a;   /* was #444 — now readable */
+  --border:          #222222;
+  --border-hover:    #4a4a4a;
+  --yellow:          rgba(253, 224, 71, 0.18);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* ── BASE ───────────────────────────────────────────────────────────────── */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-geist-sans, sans-serif);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+::selection { background: var(--text); color: var(--bg); }
+
+/* ── YELLOW HOVER HIGHLIGHT ─────────────────────────────────────────────── */
+/* Applied to content text — subtle yellow bg on hover */
+.site-section p,
+.site-section li,
+.site-section blockquote,
+.site-section pre {
+  border-radius: 3px;
+  transition: background 0.12s ease;
+  cursor: default;
+}
+.site-section p:hover,
+.site-section li:hover,
+.site-section blockquote:hover {
+  background: var(--yellow);
+}
+
+/* ── SCROLLBAR ──────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* ── CURSOR BLINK ───────────────────────────────────────────────────────── */
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+.cursor-blink { animation: blink 1s step-end infinite; }
+
+/* ── PROGRESS BAR FILL ──────────────────────────────────────────────────── */
+@keyframes fillBar {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+
+/* ── LAYOUT ─────────────────────────────────────────────────────────────── */
+.layout-root { display: flex; min-height: 100vh; }
+
+.sidebar {
+  position: fixed; top: 0; left: 0;
+  height: 100vh; width: 240px;
+  border-right: 1px solid var(--border);
+  background-color: var(--bg-surface);
+  display: flex; flex-direction: column;
+  z-index: 40;
+  transition: background-color 0.2s ease;
+}
+
+.main-content { margin-left: 240px; flex: 1; min-height: 100vh; }
+
+/* ── MOBILE ─────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .main-content { margin-left: 0; padding-top: 56px; }
+  .mobile-menu-btn { display: flex !important; }
 }

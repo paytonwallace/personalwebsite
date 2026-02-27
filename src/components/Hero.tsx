@@ -164,6 +164,7 @@ const FS: NavItem[] = [
 function NavBar({ onNavigate }: { onNavigate: (page: Page) => void }) {
   const [stack, setStack]   = useState<NavItem[]>([]);   // folder path stack
   const [items, setItems]   = useState<NavItem[]>(FS);   // current folder contents
+  const isMobile            = useIsMobile();
 
   const pathStr = stack.length === 0 ? "~/site" : `~/site/${stack.map((n) => n.name).join("/")}`;
 
@@ -185,9 +186,9 @@ function NavBar({ onNavigate }: { onNavigate: (page: Page) => void }) {
   };
 
   return (
-    <div className="hero-nav-bar" style={{
+    <div style={{
       borderTop: "1px solid var(--border)",
-      padding: "10px 56px",
+      padding: isMobile ? "10px 20px" : "10px 56px",
       display: "flex",
       alignItems: "center",
       gap: "0",
@@ -290,9 +291,9 @@ export default function Hero({ isActive, onNavigate }: SectionProps) {
       <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, var(--text) 1px, transparent 1px)", backgroundSize: "28px 28px", opacity: 0.03, pointerEvents: "none" }} />
 
       {/* Main area */}
-      <div className="hero-main-pad" style={{ flex: 1, padding: "16px 56px 8px", position: "relative", overflow: "hidden", display: "flex", flexDirection: "column" }}>
+      <div style={{ flex: 1, padding: isMobile ? "20px 20px 8px" : "16px 56px 8px", position: "relative", overflow: "hidden", display: "flex", flexDirection: "column" }}>
         {revealed && (
-          <div className="hero-cols" style={{ display: "flex", gap: "56px", alignItems: "center", flex: 1, minHeight: 0 }}>
+          <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: isMobile ? "24px" : "56px", alignItems: isMobile ? "flex-start" : "center", flex: isMobile ? undefined : 1, minHeight: 0 }}>
 
             {/* LEFT */}
             <div style={{ flex: 1, minWidth: isMobile ? "0" : "280px", display: "flex", flexDirection: "column" }}>
@@ -338,8 +339,8 @@ export default function Hero({ isActive, onNavigate }: SectionProps) {
             </div>
 
             {/* RIGHT — image toggles to form */}
-            <motion.div className="hero-photo" initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.2 }}
-              style={{ flexShrink: 0, width: "260px" }}>
+            <motion.div initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 0.2 }}
+              style={{ flexShrink: 0, width: isMobile ? "100%" : "260px" }}>
 
               <AnimatePresence mode="wait">
                 {!showForm ? (
@@ -351,7 +352,7 @@ export default function Hero({ isActive, onNavigate }: SectionProps) {
                     title="click to get in touch"
                   >
                     {hasPhoto ? (
-                      <div style={{ width: "260px", height: "390px", borderRadius: "10px", overflow: "hidden", border: "1px solid var(--border)", position: "relative" }}>
+                      <div style={{ width: isMobile ? "100%" : "260px", height: isMobile ? "260px" : "390px", borderRadius: "10px", overflow: "hidden", border: "1px solid var(--border)", position: "relative" }}>
                         <Image src="/images/payton.jpg" alt="Payton Wallace" fill style={{ objectFit: "cover", objectPosition: "center top" }} />
                         {/* Hover hint overlay */}
                         <div className="photo-hover-hint" style={{
@@ -369,7 +370,7 @@ export default function Hero({ isActive, onNavigate }: SectionProps) {
                         </div>
                       </div>
                     ) : (
-                      <div style={{ width: "260px", height: "390px", border: "1px dashed var(--border)", borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <div style={{ width: isMobile ? "100%" : "260px", height: isMobile ? "260px" : "390px", border: "1px dashed var(--border)", borderRadius: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
                         <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "10px", color: "var(--text-faint)" }}>// payton.jpg</p>
                       </div>
                     )}
@@ -378,7 +379,7 @@ export default function Hero({ isActive, onNavigate }: SectionProps) {
                   <motion.div key="form"
                     initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -12 }}
                     transition={{ duration: 0.25 }}
-                    style={{ width: "260px", height: "390px", border: "1px solid var(--border)", borderRadius: "10px", background: "var(--bg-surface)", overflow: "hidden", display: "flex", flexDirection: "column" }}
+                    style={{ width: isMobile ? "100%" : "260px", height: "390px", border: "1px solid var(--border)", borderRadius: "10px", background: "var(--bg-surface)", overflow: "hidden", display: "flex", flexDirection: "column" }}
                   >
                     <div style={{ padding: "10px 14px", borderBottom: "1px solid var(--border)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                       <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "10px", color: "var(--text-faint)" }}>~/contact</span>

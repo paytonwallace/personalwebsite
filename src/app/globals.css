@@ -90,20 +90,13 @@ body {
 /* ── MOBILE ─────────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .sidebar { display: none; }
-  .main-content { margin-left: 0; padding-top: 56px; }
+  .main-content { margin-left: 0; padding-top: 72px; }
   .mobile-menu-btn { display: flex !important; }
 
   /* Disable custom cursor on touch devices */
   * { cursor: auto !important; }
   .custom-cursor { display: none !important; }
 
-  /* Hero layout */
-  .hero-cols { flex-direction: column !important; gap: 28px !important; align-items: flex-start !important; }
-  .hero-photo { display: none !important; }
-  .hero-main-pad { padding: 20px 20px 8px !important; }
-  .hero-nav-bar { padding: 10px 20px !important; }
-
   /* General section padding */
   .section-pad { padding: 40px 20px !important; }
-  .section-inner-pad { padding: 20px 20px !important; }
 }

@@ -3,6 +3,7 @@
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { Sun, Moon, Menu, X } from "lucide-react";
+import { useIsMobile } from "@/hooks/useIsMobile";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Page } from "@/app/page";
 
@@ -35,6 +36,7 @@ export default function Sidebar({ activePage, onNavigate }: SidebarProps) {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => setMounted(true), []);
 
@@ -48,8 +50,8 @@ export default function Sidebar({ activePage, onNavigate }: SidebarProps) {
               PW
             </div>
             <div>
-              <p style={{ fontSize: "12px", fontWeight: 600, color: "var(--text)", lineHeight: 1 }}>Payton Wallace</p>
-              <p style={{ fontSize: "10px", color: "var(--text-faint)", marginTop: "3px", fontFamily: "var(--font-geist-mono)" }}>payton@paytonwallace.com</p>
+              <p style={{ fontSize: isMobile ? "15px" : "12px", fontWeight: 600, color: "var(--text)", lineHeight: 1 }}>Payton Wallace</p>
+              <p style={{ fontSize: isMobile ? "12px" : "10px", color: "var(--text-faint)", marginTop: "3px", fontFamily: "var(--font-geist-mono)" }}>payton@paytonwallace.com</p>
             </div>
           </div>
         </div>
@@ -86,7 +88,7 @@ export default function Sidebar({ activePage, onNavigate }: SidebarProps) {
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
                 )}
-                <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "12px", color: isActive ? "var(--text)" : "var(--text-muted)", fontWeight: isActive ? 500 : 400, position: "relative", zIndex: 1 }}>
+                <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: isMobile ? "16px" : "12px", color: isActive ? "var(--text)" : "var(--text-muted)", fontWeight: isActive ? 500 : 400, position: "relative", zIndex: 1 }}>
                   {item.label}
                 </span>
                 {isActive && (
@@ -120,7 +122,7 @@ export default function Sidebar({ activePage, onNavigate }: SidebarProps) {
             onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.color = "var(--text-muted)"; el.style.borderColor = "var(--border)"; el.style.background = "transparent"; }}
           >
             <InstagramIcon size={13} color="currentColor" />
-            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "11px" }}>@paytoncwallace</span>
+            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: isMobile ? "14px" : "11px" }}>@paytoncwallace</span>
           </a>
 
           {/* Theme toggle */}
@@ -131,7 +133,7 @@ export default function Sidebar({ activePage, onNavigate }: SidebarProps) {
             onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
           >
             {mounted && theme === "dark" ? <Sun size={12} color="var(--text-muted)" /> : <Moon size={12} color="var(--text-muted)" />}
-            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "10px", color: "var(--text-muted)" }}>
+            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: isMobile ? "13px" : "10px", color: "var(--text-muted)" }}>
               {mounted ? (theme === "dark" ? "light mode" : "dark mode") : "theme"}
             </span>
           </button>
@@ -147,9 +149,9 @@ export default function Sidebar({ activePage, onNavigate }: SidebarProps) {
       <aside className="sidebar"><SidebarContent /></aside>
 
       <button onClick={() => setMobileOpen(!mobileOpen)} className="mobile-menu-btn"
-        style={{ position: "fixed", top: "14px", left: "14px", zIndex: 60, width: "34px", height: "34px", borderRadius: "8px", border: "1px solid var(--border)", background: "var(--bg)", cursor: "pointer", color: "var(--text)", display: "none", alignItems: "center", justifyContent: "center" }}
+        style={{ position: "fixed", top: "12px", left: "12px", zIndex: 60, width: "48px", height: "48px", borderRadius: "10px", border: "1px solid var(--border)", background: "var(--bg)", cursor: "pointer", color: "var(--text)", display: "none", alignItems: "center", justifyContent: "center" }}
       >
-        {mobileOpen ? <X size={15} /> : <Menu size={15} />}
+        {mobileOpen ? <X size={22} /> : <Menu size={22} />}
       </button>
 
       <AnimatePresence>

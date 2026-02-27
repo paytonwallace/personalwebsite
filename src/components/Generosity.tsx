@@ -56,15 +56,13 @@ function GlobeAnimation({ onDone }: { onDone: () => void }) {
 
   useEffect(() => {
     const t1 = setTimeout(() => setStep(1), 600);
-    const t2 = setTimeout(() => setStep(2), 1400);
-    const t3 = setTimeout(() => setStep(3), 2200);
-    const t4 = setTimeout(onDone, 2800);
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); };
+    const t2 = setTimeout(() => setStep(2), 1600);
+    const t3 = setTimeout(onDone, 2400);
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
   }, [onDone]);
 
   const statusLines = [
     "connecting to mission feed...",
-    "locating: gulu, uganda",
     "signal acquired.",
   ];
 

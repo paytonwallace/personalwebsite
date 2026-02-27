@@ -95,7 +95,7 @@ export default function About({ isActive }: SectionProps) {
               <FileBlock path="~/package.json" meta={`${PORTFOLIO.length} ventures`} >
                 <div>
                   <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "10px", color: "var(--text-faint)", marginBottom: "16px" }}>
-                    // 5 ventures · 3 current · 2 past
+                    // 4 ventures · 3 current · 1 past
                   </p>
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
                     {PORTFOLIO.map((co) => (

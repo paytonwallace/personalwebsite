@@ -65,7 +65,7 @@ function TechCard({ item }: { item: TechItem }) {
 }
 
 // ── Folder section (collapsible) ─────────────────────────────────────────────
-function FolderSection({ name, count, defaultOpen = true, children }: { name: string; count: number; defaultOpen?: boolean; children: React.ReactNode }) {
+function FolderSection({ name, count, defaultOpen = false, children }: { name: string; count: number; defaultOpen?: boolean; children: React.ReactNode }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
     <div style={{ marginBottom: "4px" }}>
@@ -420,7 +420,7 @@ export default function Tools({ isActive }: SectionProps) {
                     const items = TOOLS_TECH.filter((t) => t.category === cat);
                     if (!items.length) return null;
                     return (
-                      <FolderSection key={cat} name={cat} count={items.length} defaultOpen={cat === "ai" || cat === "dev"}>
+                      <FolderSection key={cat} name={cat} count={items.length}>
                         <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: "8px", paddingTop: "8px", paddingBottom: "8px" }}>
                           {items.map((item) => <TechCard key={item.name} item={item} />)}
                         </div>
@@ -444,19 +444,25 @@ export default function Tools({ isActive }: SectionProps) {
                     const books = TOOLS_BOOKS.filter((b) => b.category === cat);
                     if (!books.length) return null;
                     return (
-                      <FolderSection key={cat} name={cat} count={books.length} defaultOpen={cat === "business"}>
+                      <FolderSection key={cat} name={cat} count={books.length}>
                         <div style={{ display: "flex", flexDirection: "column", gap: "1px", paddingTop: "4px", paddingBottom: "8px" }}>
                           {books.map((b) => (
                             <a key={b.title} href={b.link} target="_blank" rel="noopener noreferrer"
-                              style={{ display: "flex", gap: "10px", textDecoration: "none", padding: "7px 8px", borderRadius: "6px", transition: "background 0.1s", alignItems: "center" }}
+                              style={{ display: "flex", gap: "10px", textDecoration: "none", padding: "10px 8px", borderRadius: "6px", transition: "background 0.1s", alignItems: "flex-start" }}
                               onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = "var(--bg-surface-hover)")}
                               onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "transparent")}>
-                              <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: "var(--text-faint)", flexShrink: 0 }}>📖</span>
+                              <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: "var(--text-faint)", flexShrink: 0, marginTop: "2px" }}>📖</span>
                               <div style={{ flex: 1, minWidth: 0 }}>
-                                <p style={{ fontSize: "12px", color: "var(--text)", fontWeight: 500, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{b.title}</p>
-                                <p style={{ fontSize: "10px", color: "var(--text-muted)" }}>{b.author}</p>
+                                <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap", marginBottom: "2px" }}>
+                                  <p style={{ fontSize: "12px", color: "var(--text)", fontWeight: 500 }}>{b.title}</p>
+                                  <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "8px", color: "var(--text-faint)", border: "1px solid var(--border)", borderRadius: "3px", padding: "1px 5px", textTransform: "uppercase" as const, letterSpacing: "0.05em", flexShrink: 0 }}>{b.category}</span>
+                                </div>
+                                <p style={{ fontSize: "10px", color: "var(--text-muted)", marginBottom: "5px" }}>{b.author}</p>
+                                {"desc" in b && b.desc && (
+                                  <p style={{ fontSize: "10px", color: "var(--text-faint)", lineHeight: 1.65 }}>{b.desc}</p>
+                                )}
                               </div>
-                              <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: "var(--text-faint)", flexShrink: 0 }}>↗</span>
+                              <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: "var(--text-faint)", flexShrink: 0, marginTop: "2px" }}>↗</span>
                             </a>
                           ))}
                         </div>

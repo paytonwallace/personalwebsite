@@ -5,14 +5,14 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const lines = [
   { text: "mr.wallace.agent [v1.0]", delay: 0, color: "#666" },
-  { text: "> booting paytonwallace.com...", delay: 900 },
-  { text: "> loading operator profile...", delay: 1900 },
-  { text: "> name:         Payton Wallace", delay: 2900, color: "#aaa" },
-  { text: "> role:         CEO Mentor & Strategic Architect", delay: 3700, color: "#aaa" },
-  { text: "> mission:      impact · embrace · inspire", delay: 4500, color: "#aaa" },
-  { text: "> focus:        reflecting heaven on earth", delay: 5300, color: "#aaa" },
-  { text: "> status:       online", delay: 6100, color: "#22c55e" },
-  { text: "// all systems ready.", delay: 7200, color: "#666" },
+  { text: "> booting paytonwallace.com...", delay: 450 },
+  { text: "> loading operator profile...", delay: 950 },
+  { text: "> name:         Payton Wallace", delay: 1450, color: "#aaa" },
+  { text: "> role:         CEO Mentor & Strategic Architect", delay: 1850, color: "#aaa" },
+  { text: "> mission:      impact · embrace · inspire", delay: 2250, color: "#aaa" },
+  { text: "> focus:        reflecting heaven on earth", delay: 2650, color: "#aaa" },
+  { text: "> status:       online", delay: 3050, color: "#22c55e" },
+  { text: "// all systems ready.", delay: 3600, color: "#666" },
 ];
 
 const CHAR_SPEED = 22;

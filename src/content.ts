@@ -73,17 +73,32 @@ export const TOOLS_TEMPLATES = [
   {
     name: "ceo-operating-system.notion",
     desc: "Complete Notion workspace for the faith-driven CEO — weekly planning, client tracking, goals, decisions.",
-    size: "4.2 KB", status: "free" as const, tag: "productivity", link: "#",
+    tag: "productivity",
   },
   {
     name: "growth-framework.notion",
     desc: "Guided template built around the six pillars — God-Sized Vision through Healthy Habits.",
-    size: "2.8 KB", status: "free" as const, tag: "strategy", link: "#",
+    tag: "strategy",
   },
   {
     name: "client-relationship-vault.notion",
     desc: "Track every client touchpoint, meeting note, and action item. Nothing falls through the cracks.",
-    size: "6.1 KB", status: "premium" as const, tag: "client ops", link: "#",
+    tag: "client ops",
+  },
+  {
+    name: "ai-agent-memory-system.notion",
+    desc: "Build a second brain that never forgets — long-term memory, context logs, and decision history for AI-assisted operators.",
+    tag: "ai",
+  },
+  {
+    name: "social-media-manager.notion",
+    desc: "Content calendar, post drafts, platform strategy, and analytics tracking all in one Notion workspace.",
+    tag: "marketing",
+  },
+  {
+    name: "sop-database.notion",
+    desc: "Document every repeatable process in your business. SOPs your team can actually follow and your company can scale on.",
+    tag: "operations",
   },
 ];
 

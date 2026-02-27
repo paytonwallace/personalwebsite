@@ -5,8 +5,9 @@ import { useReveal } from "@/hooks/useReveal";
 import type { SectionProps } from "@/app/page";
 import TerminalWindow from "./TerminalWindow";
 import { TOOLS_TEMPLATES, TOOLS_TECH, TOOLS_BOOKS } from "@/content";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, KeyboardEvent } from "react";
 import Image from "next/image";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const s = (i: number) => ({ duration: 0.45, delay: 0.05 + i * 0.11, ease: "easeOut" as const });
 
@@ -23,104 +24,136 @@ function FileBlock({ path, meta, children, noPad }: { path: string; meta?: strin
   );
 }
 
+// ── Coming Soon Modal ─────────────────────────────────────────────────────────
+function ComingSoonModal({ templateName, onClose }: { templateName: string; onClose: () => void }) {
+  const [step, setStep] = useState<"prompt" | "name" | "email" | "done">("prompt");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [input, setInput] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => { inputRef.current?.focus(); }, [step]);
+
+  const advance = () => {
+    if (step === "prompt") { setStep("name"); setInput(""); return; }
+    if (step === "name") { setName(input); setStep("email"); setInput(""); return; }
+    if (step === "email" && input.trim()) {
+      setEmail(input);
+      setSubmitting(true);
+      fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email: input, message: `Template waitlist signup for: ${templateName}` }),
+      }).finally(() => { setSubmitting(false); setStep("done"); });
+    }
+  };
+
+  const handleKey = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") { e.preventDefault(); advance(); }
+    if (e.key === "Escape") onClose();
+  };
+
+  return (
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+      style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.7)", zIndex: 200, display: "flex", alignItems: "center", justifyContent: "center", padding: "20px" }}>
+      <motion.div initial={{ scale: 0.95, y: 10 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.95, y: 10 }}
+        style={{ width: "100%", maxWidth: "480px", border: "1px solid var(--border)", borderRadius: "10px", background: "var(--bg)", overflow: "hidden" }}>
+        {/* Title bar */}
+        <div style={{ background: "var(--bg-surface)", borderBottom: "1px solid var(--border)", padding: "10px 14px", display: "flex", alignItems: "center", gap: "6px" }}>
+          <button onClick={onClose} style={{ width: 10, height: 10, borderRadius: "50%", background: "#ff5f57", border: "none", cursor: "pointer", flexShrink: 0 }} />
+          <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#febc2e", display: "inline-block" }} />
+          <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#28c840", display: "inline-block" }} />
+          <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "11px", color: "var(--text-faint)", flex: 1, textAlign: "center" }}>{templateName}</span>
+        </div>
+        {/* Body */}
+        <div style={{ padding: "20px 24px", fontFamily: "var(--font-geist-mono)", fontSize: "12px" }}>
+          <p style={{ color: "var(--text-faint)", marginBottom: "6px" }}>{`> accessing template...`}</p>
+          <p style={{ color: "#f59e0b", marginBottom: "16px" }}>{`> status: coming_soon`}</p>
+
+          {step === "prompt" && (
+            <>
+              <p style={{ color: "var(--text-muted)", marginBottom: "16px" }}>{`> this template is in development. drop your info and i'll notify you when it's ready.`}</p>
+              <button onClick={advance} style={{ padding: "8px 20px", background: "var(--text)", color: "var(--bg)", border: "none", borderRadius: "6px", fontFamily: "var(--font-geist-mono)", fontSize: "11px", cursor: "pointer" }}>
+                get notified →
+              </button>
+            </>
+          )}
+
+          {step === "name" && (
+            <>
+              <p style={{ color: "var(--text-muted)", marginBottom: "8px" }}>{`> what's your first name?`}</p>
+              <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                <span style={{ color: "var(--text)" }}>›</span>
+                <input ref={inputRef} value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={handleKey}
+                  placeholder="enter to continue" style={{ flex: 1, background: "transparent", border: "none", outline: "none", fontFamily: "var(--font-geist-mono)", fontSize: "12px", color: "var(--text)" }} />
+              </div>
+            </>
+          )}
+
+          {step === "email" && (
+            <>
+              <p style={{ color: "var(--text-faint)", marginBottom: "4px" }}>{`> first_name: ${name}`}</p>
+              <p style={{ color: "var(--text-muted)", marginBottom: "8px" }}>{`> email address?`}</p>
+              <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                <span style={{ color: "var(--text)" }}>›</span>
+                <input ref={inputRef} type="email" value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={handleKey}
+                  placeholder="enter to submit" style={{ flex: 1, background: "transparent", border: "none", outline: "none", fontFamily: "var(--font-geist-mono)", fontSize: "12px", color: "var(--text)" }} />
+              </div>
+            </>
+          )}
+
+          {submitting && <p style={{ color: "var(--text-faint)" }}>{`> sending...`}</p>}
+
+          {step === "done" && (
+            <>
+              <p style={{ color: "#22c55e", marginBottom: "4px" }}>✓ you&apos;re on the list.</p>
+              <p style={{ color: "var(--text-faint)" }}>{`> i'll reach out when ${templateName} drops.`}</p>
+            </>
+          )}
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 // ── Template hero card ────────────────────────────────────────────────────────
-const TEMPLATE_ACCENTS = ["#3b5bdb", "#b5891f", "#1a7f4b"];
-const TEMPLATE_ICONS   = ["⬡", "◈", "⟁"];
+const TEMPLATE_ACCENTS = ["#3b5bdb", "#b5891f", "#1a7f4b", "#7c3aed", "#0e7490", "#b91c1c"];
+const TEMPLATE_ICONS   = ["⬡", "◈", "⟁", "◎", "⬢", "◇"];
 
 type TemplateItem = typeof TOOLS_TEMPLATES[number];
 
-function TemplateCard({ item, index }: { item: TemplateItem; index: number }) {
+function TemplateCard({ item, index, onOpen }: { item: TemplateItem; index: number; onOpen: () => void }) {
   const [hovered, setHovered] = useState(false);
   const accent = TEMPLATE_ACCENTS[index % TEMPLATE_ACCENTS.length];
   const icon   = TEMPLATE_ICONS[index % TEMPLATE_ICONS.length];
 
   return (
-    <a
-      href={item.link}
-      style={{ textDecoration: "none", display: "block" }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      <div style={{
-        border: "1px solid var(--border)",
-        borderRadius: "10px",
-        overflow: "hidden",
-        background: "var(--bg-surface)",
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
+    <div onClick={onOpen} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
+      style={{ cursor: "pointer", border: "1px solid var(--border)", borderRadius: "10px", overflow: "hidden", background: "var(--bg-surface)", height: "100%", display: "flex", flexDirection: "column",
         transition: "transform 0.15s, box-shadow 0.15s, border-color 0.15s",
         transform: hovered ? "translateY(-3px)" : "none",
         boxShadow: hovered ? `0 12px 32px rgba(0,0,0,0.35)` : "none",
         borderColor: hovered ? accent : "var(--border)",
       }}>
-        {/* Accent top */}
-        <div style={{
-          height: "6px",
-          background: accent,
-          flexShrink: 0,
-        }} />
-
-        <div style={{ padding: "24px", flex: 1, display: "flex", flexDirection: "column" }}>
-          {/* Icon + filename */}
-          <div style={{ display: "flex", alignItems: "flex-start", gap: "12px", marginBottom: "16px" }}>
-            <span style={{ fontSize: "22px", lineHeight: 1, color: accent }}>{icon}</span>
-            <div style={{ flex: 1 }}>
-              <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "11px", color: "var(--text-faint)", marginBottom: "4px" }}>
-                {item.name}
-              </p>
-              <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
-                <span style={{
-                  fontFamily: "var(--font-geist-mono)",
-                  fontSize: "9px",
-                  color: item.status === "free" ? "#22c55e" : "#f59e0b",
-                  border: `1px solid ${item.status === "free" ? "#22c55e44" : "#f59e0b44"}`,
-                  borderRadius: "4px",
-                  padding: "2px 6px",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.08em",
-                }}>
-                  {item.status}
-                </span>
-                <span style={{
-                  fontFamily: "var(--font-geist-mono)",
-                  fontSize: "9px",
-                  color: "var(--text-faint)",
-                  border: "1px solid var(--border)",
-                  borderRadius: "4px",
-                  padding: "2px 6px",
-                }}>
-                  {item.size}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Description */}
-          <p style={{ fontSize: "13px", color: "var(--text-muted)", lineHeight: 1.75, flex: 1, marginBottom: "24px" }}>
-            {item.desc}
-          </p>
-
-          {/* CTA */}
-          <div style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "8px",
-            padding: "9px 18px",
-            background: hovered ? accent : "transparent",
-            border: `1px solid ${hovered ? accent : "var(--border)"}`,
-            borderRadius: "6px",
-            fontFamily: "var(--font-geist-mono)",
-            fontSize: "11px",
-            color: hovered ? "#fff" : "var(--text-faint)",
-            transition: "all 0.15s",
-            alignSelf: "flex-start",
-          }}>
-            get template →
+      <div style={{ height: "6px", background: accent, flexShrink: 0 }} />
+      <div style={{ padding: "24px", flex: 1, display: "flex", flexDirection: "column" }}>
+        <div style={{ display: "flex", alignItems: "flex-start", gap: "12px", marginBottom: "16px" }}>
+          <span style={{ fontSize: "22px", lineHeight: 1, color: accent }}>{icon}</span>
+          <div style={{ flex: 1 }}>
+            <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "11px", color: "var(--text-faint)", marginBottom: "6px" }}>{item.name}</p>
+            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: "#f59e0b", border: "1px solid #f59e0b44", borderRadius: "4px", padding: "2px 6px", textTransform: "uppercase" as const, letterSpacing: "0.08em" }}>
+              coming soon
+            </span>
           </div>
         </div>
+        <p style={{ fontSize: "13px", color: "var(--text-muted)", lineHeight: 1.75, flex: 1, marginBottom: "20px" }}>{item.desc}</p>
+        <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "9px 18px", background: hovered ? accent : "transparent", border: `1px solid ${hovered ? accent : "var(--border)"}`, borderRadius: "6px", fontFamily: "var(--font-geist-mono)", fontSize: "11px", color: hovered ? "#fff" : "var(--text-faint)", transition: "all 0.15s", alignSelf: "flex-start" }}>
+          get template →
+        </div>
       </div>
-    </a>
+    </div>
   );
 }
 
@@ -179,7 +212,7 @@ function TechCard({ item }: { item: TechItem }) {
 const SCAN_LINES = [
   { text: "initializing tools.sh...", delay: 0,    color: "var(--text-faint)" },
   { text: "scanning categories...",    delay: 400,  color: "var(--text-faint)" },
-  { text: "found: templates    [3]",   delay: 900,  color: "#22c55e" },
+  { text: "found: templates    [6]",   delay: 900,  color: "#22c55e" },
   { text: "found: tech-stack  [11]",   delay: 1300, color: "#22c55e" },
   { text: "found: books        [6]",   delay: 1700, color: "#22c55e" },
   { text: "loading tools...",          delay: 2100, color: "var(--text-faint)" },
@@ -211,9 +244,9 @@ function ToolsLoadAnimation({ onDone }: { onDone: () => void }) {
   }, [showBar, onDone]);
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "64px 56px" }}>
+    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "20px" }}>
       <TerminalWindow title="tools.sh — initializing">
-        <div style={{ minWidth: "320px" }}>
+        <div style={{ minWidth: "280px", maxWidth: "100%" }}>
           {SCAN_LINES.map((line, i) => (
             <AnimatePresence key={i}>
               {visibleLines.includes(i) && (
@@ -241,14 +274,22 @@ function ToolsLoadAnimation({ onDone }: { onDone: () => void }) {
 // ── Main ──────────────────────────────────────────────────────────────────────
 export default function Tools({ isActive }: SectionProps) {
   const [scanDone, setScanDone] = useState(false);
+  const [activeModal, setActiveModal] = useState<string | null>(null);
   const revealTriggered = useReveal(isActive, 50);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (isActive) setScanDone(false);
   }, [isActive]);
 
   return (
-    <section id="tools" className="site-section section-pad" style={{ minHeight: "100vh", padding: scanDone ? "64px 56px" : "0", borderBottom: "1px solid var(--border)" }}>
+    <section id="tools" className="site-section section-pad" style={{ minHeight: "100vh", padding: scanDone ? (isMobile ? "40px 20px" : "64px 56px") : "0", borderBottom: "1px solid var(--border)" }}>
+      <AnimatePresence>
+        {activeModal && (
+          <ComingSoonModal templateName={activeModal} onClose={() => setActiveModal(null)} />
+        )}
+      </AnimatePresence>
+
       {revealTriggered && !scanDone && <ToolsLoadAnimation onDone={() => setScanDone(true)} />}
 
       {scanDone && (
@@ -273,9 +314,9 @@ export default function Tools({ isActive }: SectionProps) {
                 {TOOLS_TEMPLATES.length} templates
               </span>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "16px", alignItems: "stretch" }}>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: "16px", alignItems: "stretch" }}>
               {TOOLS_TEMPLATES.map((t, i) => (
-                <TemplateCard key={t.name} item={t} index={i} />
+                <TemplateCard key={t.name} item={t} index={i} onOpen={() => setActiveModal(t.name)} />
               ))}
             </div>
           </motion.div>
@@ -295,7 +336,7 @@ export default function Tools({ isActive }: SectionProps) {
                 {TOOLS_TECH.length} tools
               </span>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(3, 1fr)", gap: "12px" }}>
               {TOOLS_TECH.map((item) => <TechCard key={item.name} item={item} />)}
             </div>
           </motion.div>

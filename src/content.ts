@@ -16,6 +16,7 @@ export const ABOUT = {
   bio1: `As CEO Mentor and Strategic Architect at Fueled By Fire, I walk alongside Kingdom-minded
 entrepreneurs building companies God's way.`,
   bio2: `I work alongside my parents Larry & Staci Wallace, who founded FBF to reflect heaven on earth in the marketplace.`,
+  bio3: `My framework is simple: build the business God's way, grow it without compromise, and use it as a tool for something eternal.`,
   quote: `"Outside of work: porsche fanatic, 5am pickleball, travel, and building mr. wallace."`,
 };
 

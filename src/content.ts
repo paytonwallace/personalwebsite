@@ -184,12 +184,47 @@ export const TOOLS_TECH = [
 ];
 
 export const TOOLS_BOOKS = [
-  { title: "The Score Takes Care of Itself",        author: "Bill Walsh",         link: "https://www.amazon.com/dp/1591843472" },
-  { title: "How to Win Friends & Influence People", author: "Dale Carnegie",      link: "https://www.amazon.com/dp/0671027034" },
-  { title: "Building a StoryBrand",                 author: "Donald Miller",      link: "https://www.amazon.com/dp/0718033329" },
-  { title: "Unreasonable Hospitality",              author: "Will Guidara",       link: "https://www.amazon.com/dp/0593418573" },
-  { title: "Mere Christianity",                     author: "C.S. Lewis",         link: "https://www.amazon.com/dp/0060652926" },
-  { title: "The 7 Habits of Highly Effective People", author: "Stephen R. Covey", link: "https://www.amazon.com/dp/1982137274" },
+  // business
+  { title: "The Score Takes Care of Itself",      author: "Bill Walsh",              link: "https://www.amazon.com/dp/1591843472", category: "business" },
+  { title: "Good to Great",                        author: "Jim Collins",             link: "https://www.amazon.com/dp/0066620996", category: "business" },
+  { title: "Built to Last",                        author: "Jim Collins",             link: "https://www.amazon.com/dp/0060516402", category: "business" },
+  { title: "Shoe Dog",                             author: "Phil Knight",             link: "https://www.amazon.com/dp/1501135929", category: "business" },
+  { title: "Profit First",                         author: "Mike Michalowicz",        link: "https://www.amazon.com/dp/073521414X", category: "business" },
+  { title: "10x Is Easier Than 2x",               author: "Dan Sullivan & Dr. Benjamin Hardy", link: "https://www.amazon.com/dp/140196995X", category: "business" },
+  { title: "Building a StoryBrand",               author: "Donald Miller",            link: "https://www.amazon.com/dp/0718033329", category: "business" },
+  { title: "The Go-Giver",                         author: "Bob Burg",                link: "https://www.amazon.com/dp/1591842433", category: "business" },
+  { title: "Tribes",                               author: "Seth Godin",              link: "https://www.amazon.com/dp/1591842336", category: "business" },
+  { title: "Purple Cow",                           author: "Seth Godin",              link: "https://www.amazon.com/dp/1591843170", category: "business" },
+  { title: "Contagious",                           author: "Jonah Berger",            link: "https://www.amazon.com/dp/1451686579", category: "business" },
+  { title: "Think and Grow Rich",                  author: "Napoleon Hill",           link: "https://www.amazon.com/dp/0449214923", category: "business" },
+  { title: "Unreasonable Hospitality",             author: "Will Guidara",            link: "https://www.amazon.com/dp/0593418573", category: "business" },
+  { title: "The Janitor",                          author: "Todd Hopkins & Ray Hilbert", link: "https://www.amazon.com/dp/0470096543", category: "business" },
+  // leadership
+  { title: "Lincoln on Leadership",                author: "Donald T. Phillips",      link: "https://www.amazon.com/dp/0446394599", category: "leadership" },
+  { title: "Developing the Leader Within You",     author: "John C. Maxwell",         link: "https://www.amazon.com/dp/0785281126", category: "leadership" },
+  { title: "Winning with People",                  author: "John C. Maxwell",         link: "https://www.amazon.com/dp/0785260897", category: "leadership" },
+  { title: "Talent Is Never Enough",               author: "John C. Maxwell",         link: "https://www.amazon.com/dp/0785289356", category: "leadership" },
+  { title: "Born to Win",                          author: "Zig Ziglar",              link: "https://www.amazon.com/dp/0937539783", category: "leadership" },
+  { title: "How Full Is Your Bucket?",             author: "Tom Rath & Donald Clifton", link: "https://www.amazon.com/dp/1595620036", category: "leadership" },
+  { title: "How to Win Friends & Influence People", author: "Dale Carnegie",          link: "https://www.amazon.com/dp/0671027034", category: "leadership" },
+  { title: "The Art of War",                       author: "Sun Tzu",                 link: "https://www.amazon.com/dp/1599869772", category: "leadership" },
+  { title: "Winning at Work Without Losing at Love", author: "Bryan E. Robinson",    link: "https://www.amazon.com/dp/0062512501", category: "leadership" },
+  // faith
+  { title: "The Screwtape Letters",                author: "C.S. Lewis",              link: "https://www.amazon.com/dp/0060652934", category: "faith" },
+  { title: "The Great Divorce",                    author: "C.S. Lewis",              link: "https://www.amazon.com/dp/0060652950", category: "faith" },
+  { title: "Mere Christianity",                    author: "C.S. Lewis",              link: "https://www.amazon.com/dp/0060652926", category: "faith" },
+  { title: "Visioneering",                         author: "Andy Stanley",            link: "https://www.amazon.com/dp/1590521668", category: "faith" },
+  { title: "The Real You",                         author: "Bryant McGill",           link: "https://www.amazon.com/s?k=the+real+you+bryant+mcgill", category: "faith" },
+  // personal growth
+  { title: "Four Thousand Weeks",                  author: "Oliver Burkeman",         link: "https://www.amazon.com/dp/0374159122", category: "personal growth" },
+  { title: "Building a Second Brain",              author: "Tiago Forte",             link: "https://www.amazon.com/dp/1982167386", category: "personal growth" },
+  { title: "The Last Lecture",                     author: "Randy Pausch",            link: "https://www.amazon.com/dp/1401323251", category: "personal growth" },
+  { title: "Greenlights",                          author: "Matthew McConaughey",     link: "https://www.amazon.com/dp/0593139135", category: "personal growth" },
+  { title: "The Alchemist",                        author: "Paulo Coelho",            link: "https://www.amazon.com/dp/0062315005", category: "personal growth" },
+  { title: "The 7 Habits of Highly Effective People", author: "Stephen R. Covey",    link: "https://www.amazon.com/dp/1982137274", category: "personal growth" },
+  { title: "His Needs Her Needs",                  author: "Willard F. Harley Jr.",   link: "https://www.amazon.com/dp/0800718321", category: "personal growth" },
+  { title: "The Art of Patience",                  author: "Thibault Meurisse",       link: "https://www.amazon.com/s?k=the+art+of+patience+meurisse", category: "personal growth" },
+  { title: "Beethoven's Anvil",                    author: "William Benzon",          link: "https://www.amazon.com/dp/0465007643", category: "personal growth" },
 ];
 
 export const GENEROSITY = {

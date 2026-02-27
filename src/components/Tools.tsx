@@ -64,6 +64,31 @@ function TechCard({ item }: { item: TechItem }) {
   );
 }
 
+// ── Folder section (collapsible) ─────────────────────────────────────────────
+function FolderSection({ name, count, defaultOpen = true, children }: { name: string; count: number; defaultOpen?: boolean; children: React.ReactNode }) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div style={{ marginBottom: "4px" }}>
+      <button onClick={() => setOpen(!open)} style={{
+        background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center",
+        gap: "8px", padding: "6px 0", width: "100%", textAlign: "left",
+      }}>
+        <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "11px", color: "var(--text-faint)", width: "10px", flexShrink: 0 }}>{open ? "▾" : "▸"}</span>
+        <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "11px", color: "var(--text-muted)" }}>/{name}</span>
+        <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "10px", color: "var(--text-faint)" }}>({count})</span>
+      </button>
+      <AnimatePresence>
+        {open && (
+          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.2 }}
+            style={{ paddingLeft: "18px", overflow: "hidden" }}>
+            {children}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 // ── Template highlight card (main page) ──────────────────────────────────────
 const TEMPLATE_ACCENTS = ["#3b5bdb", "#b5891f", "#1a7f4b", "#7c3aed", "#0e7490", "#b91c1c"];
 
@@ -390,45 +415,54 @@ export default function Tools({ isActive }: SectionProps) {
                   </div>
                   <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "10px", color: "var(--text-faint)" }}>{TOOLS_TECH.length} tools</span>
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: isMobile ? "repeat(2, 1fr)" : "repeat(3, 1fr)", gap: "12px" }}>
-                  {TOOLS_TECH.map((item) => <TechCard key={item.name} item={item} />)}
-                </div>
+                <FileBlock path="~/tech-stack">
+                  {(["ai", "dev", "productivity", "crm", "comms", "meetings", "automation"] as const).map((cat) => {
+                    const items = TOOLS_TECH.filter((t) => t.category === cat);
+                    if (!items.length) return null;
+                    return (
+                      <FolderSection key={cat} name={cat} count={items.length} defaultOpen={cat === "ai" || cat === "dev"}>
+                        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: "8px", paddingTop: "8px", paddingBottom: "8px" }}>
+                          {items.map((item) => <TechCard key={item.name} item={item} />)}
+                        </div>
+                      </FolderSection>
+                    );
+                  })}
+                </FileBlock>
               </motion.div>
 
-              {/* ── READING LIST ── */}
+              {/* ── LIBRARY ── */}
               <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={s(2)} style={{ marginBottom: "48px" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "20px" }}>
                   <div>
                     <h2 style={{ fontSize: "22px", fontWeight: 600, color: "var(--text)", letterSpacing: "-0.02em", marginBottom: "6px" }}>library</h2>
                     <p style={{ fontSize: "13px", color: "var(--text-muted)" }}>what I recommend to every founder I work with</p>
                   </div>
+                  <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "10px", color: "var(--text-faint)" }}>{TOOLS_BOOKS.length} books</span>
                 </div>
-                <FileBlock path="~/books.md" noPad>
-                  <div style={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: "0", alignItems: "stretch" }}>
-                    {!isMobile && (
-                      <div style={{ width: "140px", flexShrink: 0, position: "relative", borderRight: "1px solid var(--border)" }}>
-                        <Image src="/images/lifestyle-4.jpg" alt="reading" fill style={{ objectFit: "cover", objectPosition: "center" }} />
-                      </div>
-                    )}
-                    <div style={{ flex: 1, padding: "20px 24px" }}>
-                      <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "10px", color: "var(--text-faint)", marginBottom: "14px" }}>// currently recommending</p>
-                      <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-                        {TOOLS_BOOKS.map((b, i) => (
-                          <a key={b.title} href={b.link} target="_blank" rel="noopener noreferrer"
-                            style={{ display: "flex", gap: "12px", textDecoration: "none", padding: "8px", borderRadius: "6px", transition: "background 0.1s", alignItems: "flex-start" }}
-                            onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = "var(--bg-surface-hover)")}
-                            onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "transparent")}>
-                            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "10px", color: "var(--text-faint)", width: "16px", flexShrink: 0, paddingTop: "2px" }}>{i + 1}.</span>
-                            <div style={{ flex: 1 }}>
-                              <p style={{ fontSize: "12px", color: "var(--text)", fontWeight: 500, marginBottom: "1px" }}>{b.title}</p>
-                              <p style={{ fontSize: "11px", color: "var(--text-muted)" }}>{b.author}</p>
-                            </div>
-                            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "10px", color: "var(--text-faint)", marginLeft: "auto", paddingTop: "2px", flexShrink: 0 }}>↗</span>
-                          </a>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
+                <FileBlock path="~/books.md">
+                  {(["business", "leadership", "faith", "personal growth"] as const).map((cat) => {
+                    const books = TOOLS_BOOKS.filter((b) => b.category === cat);
+                    if (!books.length) return null;
+                    return (
+                      <FolderSection key={cat} name={cat} count={books.length} defaultOpen={cat === "business"}>
+                        <div style={{ display: "flex", flexDirection: "column", gap: "1px", paddingTop: "4px", paddingBottom: "8px" }}>
+                          {books.map((b) => (
+                            <a key={b.title} href={b.link} target="_blank" rel="noopener noreferrer"
+                              style={{ display: "flex", gap: "10px", textDecoration: "none", padding: "7px 8px", borderRadius: "6px", transition: "background 0.1s", alignItems: "center" }}
+                              onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = "var(--bg-surface-hover)")}
+                              onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "transparent")}>
+                              <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: "var(--text-faint)", flexShrink: 0 }}>📖</span>
+                              <div style={{ flex: 1, minWidth: 0 }}>
+                                <p style={{ fontSize: "12px", color: "var(--text)", fontWeight: 500, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{b.title}</p>
+                                <p style={{ fontSize: "10px", color: "var(--text-muted)" }}>{b.author}</p>
+                              </div>
+                              <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: "var(--text-faint)", flexShrink: 0 }}>↗</span>
+                            </a>
+                          ))}
+                        </div>
+                      </FolderSection>
+                    );
+                  })}
                 </FileBlock>
               </motion.div>
 

@@ -321,7 +321,7 @@ export default function Hero({ isActive, onNavigate }: SectionProps) {
               </motion.div>
 
               <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={s(3)}
-                style={{ fontSize: "15px", color: "var(--text-muted)", lineHeight: 1.75, maxWidth: "420px", marginBottom: "20px" }}>
+                style={{ fontSize: "15px", color: "var(--text-muted)", lineHeight: 1.75, maxWidth: isMobile ? "100%" : "420px", marginBottom: "20px" }}>
                 CEO Mentor &amp; Strategic Architect. Helping entrepreneurs &amp; leaders clarify and fulfill their God sized vision.
               </motion.p>
 
@@ -397,8 +397,8 @@ export default function Hero({ isActive, onNavigate }: SectionProps) {
         )}
       </div>
 
-      {/* Filesystem nav bar — bottom */}
-      {revealed && (
+      {/* Filesystem nav bar — bottom (desktop only) */}
+      {revealed && !isMobile && (
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.6 }}>
           <NavBar onNavigate={(page) => onNavigate?.(page)} />
         </motion.div>

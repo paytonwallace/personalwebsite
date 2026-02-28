@@ -1619,11 +1619,11 @@ function Game2048({ onGameOver }: { onGameOver?: (score: number) => void }) {
 // ─── Flappy Bird ──────────────────────────────────────────────
 const FLP_W = 400;
 const FLP_H = 500;
-const GRAVITY = 0.35;
-const FLAP_VEL = -6.5;
+const GRAVITY = 0.25;
+const FLAP_VEL = -5.5;
 const PIPE_W = 50;
-const PIPE_GAP = 140;
-const PIPE_SPEED = 2.5;
+const PIPE_GAP = 160;
+const PIPE_SPEED = 2.0;
 
 interface FlpPipe { x: number; gapY: number; scored: boolean }
 

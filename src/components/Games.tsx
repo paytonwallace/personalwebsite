@@ -37,10 +37,11 @@ async function submitScore(game: string, name: string, score: number): Promise<b
 }
 
 // ─── Leaderboard Panel ───────────────────────────────────────
-function LeaderboardPanel({ game, onBack, onPlayAgain }: {
+function LeaderboardPanel({ game, onBack, onPlayAgain, message }: {
   game: string;
   onBack: () => void;
   onPlayAgain?: () => void;
+  message?: string;
 }) {
   const [scores, setScores] = useState<ScoreEntry[]>([]);
   const [loading, setLoading] = useState(true);
@@ -55,9 +56,14 @@ function LeaderboardPanel({ game, onBack, onPlayAgain }: {
       background: "#0a0a0a", border: "1px solid var(--border)", borderRadius: 8,
       padding: "24px", maxWidth: 400, width: "100%", fontFamily: "var(--font-geist-mono)",
     }}>
-      <p style={{ fontSize: 14, fontWeight: 600, color: "var(--text)", marginBottom: 16 }}>
+      <p style={{ fontSize: 14, fontWeight: 600, color: "var(--text)", marginBottom: message ? 8 : 16 }}>
         {GAME_NAMES[game] || game} — top 10
       </p>
+      {message && (
+        <p style={{ fontSize: 11, color: "var(--text-faint)", marginBottom: 12, fontStyle: "italic" }}>
+          {message}
+        </p>
+      )}
       {loading ? (
         <p style={{ fontSize: 12, color: "var(--text-faint)" }}>loading...</p>
       ) : scores.length === 0 ? (
@@ -2218,6 +2224,7 @@ export default function Games() {
   const [scoreFlow, setScoreFlow] = useState<ScoreFlow>("none");
   const [lastScore, setLastScore] = useState(0);
   const [leaderboardGame, setLeaderboardGame] = useState<string | null>(null);
+  const [leaderboardMessage, setLeaderboardMessage] = useState<string | undefined>(undefined);
   const gameOverFired = useRef(false);
 
   const handleBootComplete = useCallback(() => {
@@ -2227,17 +2234,26 @@ export default function Games() {
 
   const activeGame = phase !== "boot" && phase !== "room" ? phase : null;
 
-  const handleGameOver = useCallback((game: string, score: number) => {
+  const handleGameOver = useCallback(async (game: string, score: number) => {
     if (gameOverFired.current) return;
     gameOverFired.current = true;
     setLastScore(score);
     setLeaderboardGame(game);
-    setScoreFlow("submit");
+    const top10 = await fetchScores(game);
+    const qualifies = top10.length < 10 || score > top10[top10.length - 1].score;
+    if (qualifies) {
+      setLeaderboardMessage(undefined);
+      setScoreFlow("submit");
+    } else {
+      setLeaderboardMessage("you didn't crack the top 10 — keep going");
+      setScoreFlow("leaderboard");
+    }
   }, []);
 
   const handlePlayAgain = useCallback(() => {
     setScoreFlow("none");
     setLeaderboardGame(null);
+    setLeaderboardMessage(undefined);
     gameOverFired.current = false;
     // Re-mount game by toggling phase
     const current = phase;
@@ -2248,6 +2264,7 @@ export default function Games() {
   const handleBackToRoom = useCallback(() => {
     setScoreFlow("none");
     setLeaderboardGame(null);
+    setLeaderboardMessage(undefined);
     gameOverFired.current = false;
     setPhase("room");
   }, []);
@@ -2257,6 +2274,7 @@ export default function Games() {
     gameOverFired.current = false;
     setScoreFlow("none");
     setLeaderboardGame(null);
+    setLeaderboardMessage(undefined);
   }, [phase]);
 
   return (
@@ -2353,8 +2371,8 @@ export default function Games() {
                     <ScoreSubmitForm
                       game={leaderboardGame}
                       score={lastScore}
-                      onDone={() => setScoreFlow("leaderboard")}
-                      onSkip={() => setScoreFlow("leaderboard")}
+                      onDone={() => { setLeaderboardMessage(undefined); setScoreFlow("leaderboard"); }}
+                      onSkip={() => { setLeaderboardMessage(undefined); setScoreFlow("leaderboard"); }}
                     />
                   </div>
                 )}
@@ -2365,6 +2383,7 @@ export default function Games() {
                       game={leaderboardGame}
                       onBack={handleBackToRoom}
                       onPlayAgain={handlePlayAgain}
+                      message={leaderboardMessage}
                     />
                   </div>
                 )}

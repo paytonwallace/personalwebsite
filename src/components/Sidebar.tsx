@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
@@ -14,6 +14,7 @@ const navItems: { label: string; page: Page }[] = [
   { label: "generosity",  page: "generosity"  },
   { label: "life.md",     page: "life"        },
   { label: "connect",     page: "connect"     },
+  { label: "games",       page: "games"       },
 ];
 
 // Black & white Instagram SVG icon
@@ -100,12 +101,12 @@ export default function Sidebar({ activePage, onNavigate }: SidebarProps) {
 
           <div style={{ padding: "14px 10px 0", marginTop: "8px", borderTop: "1px solid var(--border)" }}>
             <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: "var(--text-faint)", lineHeight: 1.7 }}>
-              // impact · embrace · inspire
+              // impact Â· embrace Â· inspire
             </p>
           </div>
         </nav>
 
-        {/* Bottom — only Instagram + theme toggle */}
+        {/* Bottom â€” only Instagram + theme toggle */}
         <div style={{ padding: "14px 12px", borderTop: "1px solid var(--border)", display: "flex", flexDirection: "column", gap: "8px" }}>
           {/* Instagram */}
           <a
@@ -173,3 +174,4 @@ export default function Sidebar({ activePage, onNavigate }: SidebarProps) {
     </>
   );
 }
+

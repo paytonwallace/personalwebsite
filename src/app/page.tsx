@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -11,9 +11,10 @@ import Tools from "@/components/Tools";
 import Generosity from "@/components/Generosity";
 import LifeMd from "@/components/LifeMd";
 import Connect from "@/components/Connect";
+import Games from "@/components/Games";
 import Footer from "@/components/Footer";
 
-export type Page = "home" | "about" | "tools" | "generosity" | "life" | "connect";
+export type Page = "home" | "about" | "tools" | "generosity" | "life" | "connect" | "games";
 
 export type SectionProps = {
   isActive: boolean;
@@ -33,6 +34,7 @@ export default function Home() {
     generosity: Generosity,
     life:       LifeMd,
     connect:    Connect,
+    games:      Games,
   };
 
   const ActiveSection = sections[activePage];
@@ -75,3 +77,4 @@ export default function Home() {
     </>
   );
 }
+

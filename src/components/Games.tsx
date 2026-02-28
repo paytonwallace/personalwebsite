@@ -3,6 +3,173 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+// ─── Leaderboard Types & Helpers ─────────────────────────────
+interface ScoreEntry {
+  id: number;
+  game: string;
+  name: string;
+  score: number;
+  created_at: string;
+}
+
+const GAME_NAMES: Record<string, string> = {
+  snake: "snake", pong: "pong", breakout: "breakout", tictactoe: "tic-tac-toe",
+  tetris: "tetris", "2048": "2048", flappy: "flappy", invaders: "invaders",
+};
+
+async function fetchScores(game: string): Promise<ScoreEntry[]> {
+  try {
+    const res = await fetch(`/api/scores?game=${game}`);
+    if (!res.ok) return [];
+    return await res.json();
+  } catch { return []; }
+}
+
+async function submitScore(game: string, name: string, score: number): Promise<boolean> {
+  try {
+    const res = await fetch("/api/scores", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ game, name, score }),
+    });
+    return res.ok;
+  } catch { return false; }
+}
+
+// ─── Leaderboard Panel ───────────────────────────────────────
+function LeaderboardPanel({ game, onBack, onPlayAgain }: {
+  game: string;
+  onBack: () => void;
+  onPlayAgain?: () => void;
+}) {
+  const [scores, setScores] = useState<ScoreEntry[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    fetchScores(game).then((s) => { setScores(s); setLoading(false); });
+  }, [game]);
+
+  return (
+    <div style={{
+      background: "#0a0a0a", border: "1px solid var(--border)", borderRadius: 8,
+      padding: "24px", maxWidth: 400, width: "100%", fontFamily: "var(--font-geist-mono)",
+    }}>
+      <p style={{ fontSize: 14, fontWeight: 600, color: "var(--text)", marginBottom: 16 }}>
+        {GAME_NAMES[game] || game} — top 10
+      </p>
+      {loading ? (
+        <p style={{ fontSize: 12, color: "var(--text-faint)" }}>loading...</p>
+      ) : scores.length === 0 ? (
+        <p style={{ fontSize: 12, color: "var(--text-faint)" }}>no scores yet. be the first!</p>
+      ) : (
+        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+          <thead>
+            <tr style={{ color: "var(--text-faint)", fontSize: 11 }}>
+              <th style={{ textAlign: "left", padding: "4px 0", fontWeight: 400 }}>#</th>
+              <th style={{ textAlign: "left", padding: "4px 0", fontWeight: 400 }}>name</th>
+              <th style={{ textAlign: "right", padding: "4px 0", fontWeight: 400 }}>score</th>
+            </tr>
+          </thead>
+          <tbody>
+            {scores.map((s, i) => (
+              <tr key={s.id} style={{ background: i % 2 === 0 ? "transparent" : "#111" }}>
+                <td style={{
+                  padding: "6px 8px 6px 0",
+                  color: i < 3 ? "#B5945A" : "var(--text-faint)",
+                  fontWeight: i < 3 ? 700 : 400,
+                }}>{i + 1}</td>
+                <td style={{ padding: "6px 0", color: "var(--text)" }}>{s.name}</td>
+                <td style={{ padding: "6px 0", textAlign: "right", color: "var(--text)" }}>{s.score}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+      <div style={{ display: "flex", gap: 8, marginTop: 16 }}>
+        <button onClick={onBack} style={{
+          padding: "7px 12px", borderRadius: 6, border: "1px solid var(--border)",
+          background: "transparent", cursor: "pointer", fontFamily: "var(--font-geist-mono)",
+          fontSize: 11, color: "var(--text-faint)",
+        }}>
+          ← back to game room
+        </button>
+        {onPlayAgain && (
+          <button onClick={onPlayAgain} style={{
+            padding: "7px 12px", borderRadius: 6, border: "1px solid var(--border)",
+            background: "transparent", cursor: "pointer", fontFamily: "var(--font-geist-mono)",
+            fontSize: 11, color: "var(--text-faint)",
+          }}>
+            play again
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ─── Score Submit Form ───────────────────────────────────────
+function ScoreSubmitForm({ game, score, onDone, onSkip }: {
+  game: string;
+  score: number;
+  onDone: () => void;
+  onSkip: () => void;
+}) {
+  const [name, setName] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubmit = async () => {
+    if (!name.trim()) return;
+    setSubmitting(true);
+    await submitScore(game, name.trim(), score);
+    setSubmitting(false);
+    onDone();
+  };
+
+  return (
+    <div style={{
+      background: "#0a0a0a", border: "1px solid var(--border)", borderRadius: 8,
+      padding: "20px", maxWidth: 320, width: "100%", fontFamily: "var(--font-geist-mono)",
+    }}>
+      <p style={{ fontSize: 13, color: "var(--text)", marginBottom: 4 }}>
+        score: <span style={{ color: "#eab308", fontWeight: 700 }}>{score}</span>
+      </p>
+      <p style={{ fontSize: 11, color: "var(--text-faint)", marginBottom: 12 }}>submit to leaderboard</p>
+      <div style={{ display: "flex", gap: 8 }}>
+        <input
+          type="text"
+          maxLength={12}
+          placeholder="your name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          onKeyDown={(e) => { if (e.key === "Enter") handleSubmit(); }}
+          style={{
+            flex: 1, padding: "6px 10px", borderRadius: 4,
+            border: "1px solid var(--border)", background: "#1a1a1a",
+            fontFamily: "var(--font-geist-mono)", fontSize: 12, color: "#fff",
+            outline: "none",
+          }}
+        />
+        <button onClick={handleSubmit} disabled={submitting || !name.trim()} style={{
+          padding: "6px 12px", borderRadius: 4, border: "1px solid var(--border)",
+          background: submitting ? "#333" : "#1a1a1a", cursor: "pointer",
+          fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "#fff",
+          opacity: submitting || !name.trim() ? 0.5 : 1,
+        }}>
+          {submitting ? "..." : "submit"}
+        </button>
+      </div>
+      <button onClick={onSkip} style={{
+        marginTop: 8, background: "none", border: "none", cursor: "pointer",
+        fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "var(--text-faint)",
+        padding: 0, textDecoration: "underline",
+      }}>
+        skip → view leaderboard
+      </button>
+    </div>
+  );
+}
+
 // ─── Boot Sound ───────────────────────────────────────────────
 function playBootChime() {
   try {
@@ -208,7 +375,7 @@ interface SnakeState {
   started: boolean;
 }
 
-function SnakeGame() {
+function SnakeGame({ onGameOver }: { onGameOver?: (score: number) => void }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const stateRef = useRef<SnakeState>({
     snake: [{ x: 10, y: 9 }, { x: 9, y: 9 }, { x: 8, y: 9 }],
@@ -288,6 +455,7 @@ function SnakeGame() {
       s.dead = true;
       setDead(true);
       draw();
+      onGameOver?.(s.score);
       return;
     }
     const ate = head.x === s.food.x && head.y === s.food.y;
@@ -345,7 +513,7 @@ interface PongState {
   rally: number;
 }
 
-function PongGame() {
+function PongGame({ onGameOver }: { onGameOver?: (score: number) => void }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const stateRef = useRef<PongState>({
     px: 10, py: PONG_H / 2 - 30,
@@ -458,8 +626,18 @@ function PongGame() {
         }
 
         // Scoring
-        if (s.bx < 0) { s.aScore++; setScores({ p: s.pScore, a: s.aScore }); resetBall(1); }
-        if (s.bx > PONG_W) { s.pScore++; setScores({ p: s.pScore, a: s.aScore }); resetBall(-1); }
+        if (s.bx < 0) {
+          s.aScore++;
+          setScores({ p: s.pScore, a: s.aScore });
+          if (s.aScore >= 7) { s.paused = true; onGameOver?.(s.pScore); }
+          else resetBall(1);
+        }
+        if (s.bx > PONG_W) {
+          s.pScore++;
+          setScores({ p: s.pScore, a: s.aScore });
+          if (s.pScore >= 7) { s.paused = true; onGameOver?.(s.pScore); }
+          else resetBall(-1);
+        }
       }
       draw();
       raf = requestAnimationFrame(tick);
@@ -521,7 +699,7 @@ function initBricks(): boolean[][] {
   return Array.from({ length: BRK_ROWS }, () => Array(BRK_COLS).fill(true));
 }
 
-function BreakoutGame() {
+function BreakoutGame({ onGameOver }: { onGameOver?: (score: number) => void }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const stateRef = useRef<BrkState>({
     padX: BRK_W / 2 - 30,
@@ -678,6 +856,7 @@ function BreakoutGame() {
           setLives(s.lives);
           if (s.lives <= 0) {
             s.dead = true;
+            onGameOver?.(s.score);
           } else {
             resetBall();
           }
@@ -988,7 +1167,7 @@ function ghostY(grid: (string | null)[][], piece: TetState["piece"]) {
   return gy;
 }
 
-function TetrisGame() {
+function TetrisGame({ onGameOver }: { onGameOver?: (score: number) => void }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const stateRef = useRef<TetState>({
     grid: Array.from({ length: TET_ROWS }, () => Array(TET_COLS).fill(null)),
@@ -1037,8 +1216,11 @@ function TetrisGame() {
     const t = TETROMINOES[s.next];
     s.piece = { shape: t.shape.map(r => [...r]), color: t.color, x: Math.floor(TET_COLS / 2) - 1, y: 0 };
     s.next = Math.floor(Math.random() * TETROMINOES.length);
-    if (collides(s.grid, s.piece.shape, s.piece.x, s.piece.y)) s.over = true;
-  }, []);
+    if (collides(s.grid, s.piece.shape, s.piece.x, s.piece.y)) {
+      s.over = true;
+      onGameOver?.(s.score);
+    }
+  }, [onGameOver]);
 
   const draw = useCallback(() => {
     const canvas = canvasRef.current;
@@ -1285,7 +1467,7 @@ function move48(grid: number[][], dir: string): { grid: number[][]; score: numbe
   return { grid: g, score: totalScore, moved };
 }
 
-function Game2048() {
+function Game2048({ onGameOver }: { onGameOver?: (score: number) => void }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const stateRef = useRef<G48State>({
     grid: emptyGrid48(), score: 0, won: false, over: false, started: false, continued: false,
@@ -1370,6 +1552,7 @@ function Game2048() {
     if (!canMove48(s.grid)) {
       s.over = true;
       setOverlay("over");
+      onGameOver?.(s.score);
     }
     draw();
   }, [draw]);
@@ -1447,7 +1630,7 @@ interface FlpState {
   groundX: number;
 }
 
-function FlappyGame() {
+function FlappyGame({ onGameOver }: { onGameOver?: (score: number) => void }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const stateRef = useRef<FlpState>({
     birdY: FLP_H / 2 - 50, birdVel: 0,
@@ -1591,6 +1774,7 @@ function FlappyGame() {
         if (by + BIRD_R >= FLP_H - 40 || by - BIRD_R <= 0) {
           s.over = true;
           if (s.score > s.highScore) { s.highScore = s.score; setHighScore(s.highScore); }
+          onGameOver?.(s.score);
         }
         // Pipes
         for (const pipe of s.pipes) {
@@ -1598,6 +1782,7 @@ function FlappyGame() {
             if (by - BIRD_R < pipe.gapY || by + BIRD_R > pipe.gapY + PIPE_GAP) {
               s.over = true;
               if (s.score > s.highScore) { s.highScore = s.score; setHighScore(s.highScore); }
+              onGameOver?.(s.score);
             }
           }
         }
@@ -1608,7 +1793,7 @@ function FlappyGame() {
 
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [reset]);
+  }, [reset, onGameOver]);
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
@@ -1695,7 +1880,7 @@ function createShields(): Shield[] {
   return shields;
 }
 
-function InvadersGame() {
+function InvadersGame({ onGameOver }: { onGameOver?: (score: number) => void }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const stateRef = useRef<InvState>({
     player: INV_W / 2 - PLAYER_W / 2,
@@ -1863,7 +2048,7 @@ function InvadersGame() {
             b.active = false;
             s.lives--;
             setLives(s.lives);
-            if (s.lives <= 0) s.over = true;
+            if (s.lives <= 0) { s.over = true; onGameOver?.(s.score); }
           }
           if (!b.active) continue;
           for (const sh of s.shields) {
@@ -1907,6 +2092,7 @@ function InvadersGame() {
           for (const a of liveAliens) {
             if (a.y + ALIEN_H >= INV_H - 50) {
               s.over = true;
+              onGameOver?.(s.score);
               break;
             }
           }
@@ -1977,16 +2163,14 @@ const GAMES: GameCard[] = [
   { id: "invaders", icon: "👾", name: "invaders", description: "defend earth · 4 waves" },
 ];
 
-function GameCardButton({ game, onClick }: { game: GameCard; onClick: () => void }) {
+function GameCardButton({ game, onClick, onViewScores }: { game: GameCard; onClick: () => void; onViewScores: () => void }) {
   return (
-    <button
-      onClick={onClick}
-      style={{
-        display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 8,
-        padding: "20px", borderRadius: 8, border: "1px solid var(--border)",
-        background: "var(--bg-surface)", cursor: "pointer", textAlign: "left",
-        width: "100%", transition: "border-color 0.15s, background 0.15s",
-      }}
+    <div style={{
+      display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 8,
+      padding: "20px", borderRadius: 8, border: "1px solid var(--border)",
+      background: "var(--bg-surface)", textAlign: "left", width: "100%",
+      transition: "border-color 0.15s, background 0.15s", cursor: "pointer",
+    }}
       onMouseEnter={(e) => {
         e.currentTarget.style.borderColor = "var(--border-hover)";
         e.currentTarget.style.background = "var(--bg-surface-hover)";
@@ -1995,19 +2179,34 @@ function GameCardButton({ game, onClick }: { game: GameCard; onClick: () => void
         e.currentTarget.style.borderColor = "var(--border)";
         e.currentTarget.style.background = "var(--bg-surface)";
       }}
+      onClick={onClick}
     >
       <span style={{ fontSize: 28 }}>{game.icon}</span>
       <div>
         <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 14, fontWeight: 600, color: "var(--text)", marginBottom: 4 }}>{game.name}</p>
         <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "var(--text-faint)" }}>{game.description}</p>
       </div>
-      <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 12, color: "var(--text-faint)", marginTop: 4 }}>play →</span>
-    </button>
+      <div style={{ display: "flex", justifyContent: "space-between", width: "100%", marginTop: 4 }}>
+        <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 12, color: "var(--text-faint)" }}>play →</span>
+        {game.id !== "tictactoe" && (
+          <span
+            onClick={(e) => { e.stopPropagation(); onViewScores(); }}
+            style={{
+              fontFamily: "var(--font-geist-mono)", fontSize: 10, color: "var(--text-faint)",
+              cursor: "pointer", textDecoration: "underline",
+            }}
+          >
+            view scores →
+          </span>
+        )}
+      </div>
+    </div>
   );
 }
 
 // ─── Main Component ───────────────────────────────────────────
 type Phase = "boot" | "room" | "snake" | "pong" | "breakout" | "tictactoe" | "tetris" | "2048" | "flappy" | "invaders";
+type ScoreFlow = "none" | "submit" | "leaderboard";
 
 export default function Games() {
   const [phase, setPhase] = useState<Phase>(() => {
@@ -2016,6 +2215,10 @@ export default function Games() {
     }
     return "boot";
   });
+  const [scoreFlow, setScoreFlow] = useState<ScoreFlow>("none");
+  const [lastScore, setLastScore] = useState(0);
+  const [leaderboardGame, setLeaderboardGame] = useState<string | null>(null);
+  const gameOverFired = useRef(false);
 
   const handleBootComplete = useCallback(() => {
     if (typeof window !== "undefined") sessionStorage.setItem("mw-console-booted", "1");
@@ -2023,6 +2226,38 @@ export default function Games() {
   }, []);
 
   const activeGame = phase !== "boot" && phase !== "room" ? phase : null;
+
+  const handleGameOver = useCallback((game: string, score: number) => {
+    if (gameOverFired.current) return;
+    gameOverFired.current = true;
+    setLastScore(score);
+    setLeaderboardGame(game);
+    setScoreFlow("submit");
+  }, []);
+
+  const handlePlayAgain = useCallback(() => {
+    setScoreFlow("none");
+    setLeaderboardGame(null);
+    gameOverFired.current = false;
+    // Re-mount game by toggling phase
+    const current = phase;
+    setPhase("room");
+    setTimeout(() => setPhase(current), 10);
+  }, [phase]);
+
+  const handleBackToRoom = useCallback(() => {
+    setScoreFlow("none");
+    setLeaderboardGame(null);
+    gameOverFired.current = false;
+    setPhase("room");
+  }, []);
+
+  // Reset gameOverFired when switching games
+  useEffect(() => {
+    gameOverFired.current = false;
+    setScoreFlow("none");
+    setLeaderboardGame(null);
+  }, [phase]);
 
   return (
     <div style={{ padding: "32px 24px", minHeight: "100vh" }}>
@@ -2040,6 +2275,18 @@ export default function Games() {
             <h1 style={{ fontSize: 22, fontWeight: 600, color: "var(--text)", marginBottom: 4 }}>mr.wallace console</h1>
           </div>
 
+          {/* Leaderboard overlay on game room */}
+          {phase === "room" && leaderboardGame && (
+            <div style={{
+              position: "fixed", inset: 0, zIndex: 50, background: "rgba(0,0,0,0.8)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+            }} onClick={() => setLeaderboardGame(null)}>
+              <div onClick={(e) => e.stopPropagation()}>
+                <LeaderboardPanel game={leaderboardGame} onBack={() => setLeaderboardGame(null)} />
+              </div>
+            </div>
+          )}
+
           {/* Game grid or active game */}
           <AnimatePresence mode="wait">
             {!activeGame && (
@@ -2049,7 +2296,12 @@ export default function Games() {
                   maxWidth: 640,
                 }}>
                   {GAMES.map((g) => (
-                    <GameCardButton key={g.id} game={g} onClick={() => setPhase(g.id as Phase)} />
+                    <GameCardButton
+                      key={g.id}
+                      game={g}
+                      onClick={() => setPhase(g.id as Phase)}
+                      onViewScores={() => setLeaderboardGame(g.id)}
+                    />
                   ))}
                 </div>
                 <button
@@ -2072,7 +2324,7 @@ export default function Games() {
             {activeGame && (
               <motion.div key={activeGame} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
                 <button
-                  onClick={() => setPhase("room")}
+                  onClick={handleBackToRoom}
                   style={{
                     marginBottom: 16, padding: "7px 12px", borderRadius: 6,
                     border: "1px solid var(--border)", background: "transparent",
@@ -2082,14 +2334,40 @@ export default function Games() {
                 >
                   ← back
                 </button>
-                {activeGame === "snake" && <SnakeGame />}
-                {activeGame === "pong" && <PongGame />}
-                {activeGame === "breakout" && <BreakoutGame />}
-                {activeGame === "tictactoe" && <TicTacToeGame />}
-                {activeGame === "tetris" && <TetrisGame />}
-                {activeGame === "2048" && <Game2048 />}
-                {activeGame === "flappy" && <FlappyGame />}
-                {activeGame === "invaders" && <InvadersGame />}
+
+                {scoreFlow === "none" && (
+                  <>
+                    {activeGame === "snake" && <SnakeGame onGameOver={(s) => handleGameOver("snake", s)} />}
+                    {activeGame === "pong" && <PongGame onGameOver={(s) => handleGameOver("pong", s)} />}
+                    {activeGame === "breakout" && <BreakoutGame onGameOver={(s) => handleGameOver("breakout", s)} />}
+                    {activeGame === "tictactoe" && <TicTacToeGame />}
+                    {activeGame === "tetris" && <TetrisGame onGameOver={(s) => handleGameOver("tetris", s)} />}
+                    {activeGame === "2048" && <Game2048 onGameOver={(s) => handleGameOver("2048", s)} />}
+                    {activeGame === "flappy" && <FlappyGame onGameOver={(s) => handleGameOver("flappy", s)} />}
+                    {activeGame === "invaders" && <InvadersGame onGameOver={(s) => handleGameOver("invaders", s)} />}
+                  </>
+                )}
+
+                {scoreFlow === "submit" && leaderboardGame && (
+                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 16, marginTop: 24 }}>
+                    <ScoreSubmitForm
+                      game={leaderboardGame}
+                      score={lastScore}
+                      onDone={() => setScoreFlow("leaderboard")}
+                      onSkip={() => setScoreFlow("leaderboard")}
+                    />
+                  </div>
+                )}
+
+                {scoreFlow === "leaderboard" && leaderboardGame && (
+                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 16, marginTop: 24 }}>
+                    <LeaderboardPanel
+                      game={leaderboardGame}
+                      onBack={handleBackToRoom}
+                      onPlayAgain={handlePlayAgain}
+                    />
+                  </div>
+                )}
               </motion.div>
             )}
           </AnimatePresence>

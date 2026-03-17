@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Providers } from "./providers";
+import CustomCursor from "@/components/Cursor";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -21,6 +22,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://paytonwallace.com"),
   title: "Payton Wallace",
   description:
     "CEO Mentor & Strategic Architect. Helping faith-driven founders scale to 7-8 figures.",
@@ -53,7 +55,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <Providers>{children}</Providers>
+        <Providers>
+          <CustomCursor />
+          {children}
+        </Providers>
       </body>
     </html>
   );

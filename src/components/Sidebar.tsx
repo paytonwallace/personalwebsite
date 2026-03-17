@@ -1,10 +1,12 @@
-﻿"use client";
+"use client";
 
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { Sun, Moon, Menu, X } from "lucide-react";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { motion, AnimatePresence } from "framer-motion";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 import type { Page } from "@/app/page";
 
 const navItems: { label: string; page: Page }[] = [
@@ -38,6 +40,8 @@ export default function Sidebar({ activePage, onNavigate }: SidebarProps) {
   const [mounted, setMounted] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const isMobile = useIsMobile();
+  const pathname = usePathname();
+  const isWritingsActive = pathname?.startsWith("/mrwallace");
 
   useEffect(() => setMounted(true), []);
 
@@ -51,8 +55,8 @@ export default function Sidebar({ activePage, onNavigate }: SidebarProps) {
               PW
             </div>
             <div>
-              <p style={{ fontSize: isMobile ? "15px" : "12px", fontWeight: 600, color: "var(--text)", lineHeight: 1 }}>Payton Wallace</p>
-              <p style={{ fontSize: isMobile ? "12px" : "10px", color: "var(--text-faint)", marginTop: "3px", fontFamily: "var(--font-geist-mono)" }}>payton@paytonwallace.com</p>
+              <p style={{ fontSize: "12px", fontWeight: 600, color: "var(--text)", lineHeight: 1 }}>Payton Wallace</p>
+              <p style={{ fontSize: "10px", color: "var(--text-faint)", marginTop: "3px", fontFamily: "var(--font-geist-mono)" }}>payton@paytonwallace.com</p>
             </div>
           </div>
         </div>
@@ -89,7 +93,7 @@ export default function Sidebar({ activePage, onNavigate }: SidebarProps) {
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
                 )}
-                <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: isMobile ? "16px" : "12px", color: isActive ? "var(--text)" : "var(--text-muted)", fontWeight: isActive ? 500 : 400, position: "relative", zIndex: 1 }}>
+                <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "12px", color: isActive ? "var(--text)" : "var(--text-muted)", fontWeight: isActive ? 500 : 400, position: "relative", zIndex: 1 }}>
                   {item.label}
                 </span>
                 {isActive && (
@@ -99,9 +103,35 @@ export default function Sidebar({ activePage, onNavigate }: SidebarProps) {
             );
           })}
 
+          {/* Writings */}
+          <div style={{ marginTop: "8px", borderTop: "1px solid var(--border)", paddingTop: "10px" }}>
+            <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: "var(--text-faint)", textTransform: "uppercase", letterSpacing: "0.15em", padding: "0 8px", marginBottom: "6px" }}>
+              // writings
+            </p>
+            <Link
+              href="/mrwallace"
+              onClick={() => setMobileOpen(false)}
+              style={{
+                width: "100%", display: "flex", alignItems: "center", gap: "8px",
+                padding: "9px 10px", borderRadius: "6px", border: "none",
+                background: isWritingsActive ? "var(--bg-surface-hover)" : "transparent",
+                cursor: "pointer", textDecoration: "none",
+                marginBottom: "2px", position: "relative",
+                ...(isWritingsActive ? { border: "1px solid var(--border)" } : {}),
+              }}
+            >
+              <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "12px", color: isWritingsActive ? "var(--text)" : "var(--text-muted)", fontWeight: isWritingsActive ? 500 : 400 }}>
+                /mrwallace
+              </span>
+              {isWritingsActive && (
+                <span className="cursor-blink" style={{ display: "inline-block", width: "5px", height: "11px", background: "var(--text-muted)", borderRadius: "1px", marginLeft: "auto" }} />
+              )}
+            </Link>
+          </div>
+
           <div style={{ padding: "14px 10px 0", marginTop: "8px", borderTop: "1px solid var(--border)" }}>
             <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: "var(--text-faint)", lineHeight: 1.7 }}>
-              // impact Â· embrace Â· inspire
+              // impact · embrace · inspire
             </p>
           </div>
         </nav>
@@ -123,7 +153,7 @@ export default function Sidebar({ activePage, onNavigate }: SidebarProps) {
             onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.color = "var(--text-muted)"; el.style.borderColor = "var(--border)"; el.style.background = "transparent"; }}
           >
             <InstagramIcon size={13} color="currentColor" />
-            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: isMobile ? "14px" : "11px" }}>@paytoncwallace</span>
+            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "11px" }}>@paytoncwallace</span>
           </a>
 
           {/* Theme toggle */}
@@ -134,7 +164,7 @@ export default function Sidebar({ activePage, onNavigate }: SidebarProps) {
             onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
           >
             {mounted && theme === "dark" ? <Sun size={12} color="var(--text-muted)" /> : <Moon size={12} color="var(--text-muted)" />}
-            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: isMobile ? "13px" : "10px", color: "var(--text-muted)" }}>
+            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "10px", color: "var(--text-muted)" }}>
               {mounted ? (theme === "dark" ? "light mode" : "dark mode") : "theme"}
             </span>
           </button>

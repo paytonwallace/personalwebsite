@@ -71,7 +71,8 @@ export default function MrWallacePage() {
   const filtered = filter === "all" ? posts : posts.filter((p) => p.category === filter);
 
   function formatDate(d: string) {
-    return new Date(d).toLocaleDateString("en-US", {
+    const [year, month, day] = d.split("-").map(Number);
+    return new Date(year, month - 1, day).toLocaleDateString("en-US", {
       month: "short",
       day: "numeric",
       year: "numeric",
@@ -166,6 +167,14 @@ export default function MrWallacePage() {
 
       {/* Posts feed */}
       <main style={{ maxWidth: "720px", margin: "0 auto", padding: "16px 24px 80px" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}>
+          <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "11px", color: "var(--text-faint)", textTransform: "uppercase", letterSpacing: "0.14em" }}>
+            // recent writings
+          </p>
+          <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "10px", color: "var(--text-faint)" }}>
+            {filtered.length} {filtered.length === 1 ? "post" : "posts"}
+          </p>
+        </div>
         <AnimatePresence mode="popLayout">
           {filtered.map((post, i) => {
             const postMeta = meta[post.slug];

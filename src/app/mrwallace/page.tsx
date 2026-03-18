@@ -25,6 +25,7 @@ const CATEGORIES = [
   { id: "mr/tools", label: "mr/tools" },
   { id: "mr/lessons", label: "mr/lessons" },
   { id: "mr/brain", label: "mr/brain" },
+  { id: "mr/market", label: "mr/market" },
 ];
 
 function HeartIcon() {

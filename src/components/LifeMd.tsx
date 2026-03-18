@@ -186,6 +186,89 @@ const POSTS: Post[] = [
   },
 ];
 
+
+// ── Recent Writings Feed ──────────────────────────────────────────────────────
+interface WritingPost {
+  slug: string;
+  title: string;
+  category: string;
+  date: string;
+  readTime: string;
+  excerpt: string;
+}
+
+function WritingsFeed() {
+  const [posts, setPosts] = useState<WritingPost[]>([]);
+
+  useEffect(() => {
+    fetch('/api/blog')
+      .then(r => r.json())
+      .then((data: WritingPost[]) => setPosts(data.slice(0, 3)))
+      .catch(() => {});
+  }, []);
+
+  function formatDate(d: string) {
+    const [year, month, day] = d.split('-').map(Number);
+    return new Date(year, month - 1, day).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  }
+
+  if (posts.length === 0) return null;
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+      {posts.map((post) => (
+        <a
+          key={post.slug}
+          href={'/mrwallace/' + post.slug}
+          style={{ textDecoration: 'none', display: 'block' }}
+        >
+          <div
+            style={{
+              padding: '14px 0',
+              borderBottom: '1px solid var(--border)',
+              transition: 'opacity 0.15s',
+              cursor: 'pointer',
+            }}
+            onMouseEnter={e => (e.currentTarget as HTMLElement).style.opacity = '0.7'}
+            onMouseLeave={e => (e.currentTarget as HTMLElement).style.opacity = '1'}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '5px', flexWrap: 'wrap' }}>
+              <span style={{
+                fontFamily: 'var(--font-geist-mono)',
+                fontSize: '10px',
+                color: '#22c55e',
+                border: '1px solid rgba(34,197,94,0.3)',
+                borderRadius: '10px',
+                padding: '1px 8px',
+              }}>{post.category}</span>
+              <span style={{ fontFamily: 'var(--font-geist-mono)', fontSize: '10px', color: 'var(--text-faint)' }}>{formatDate(post.date)}</span>
+              <span style={{ fontFamily: 'var(--font-geist-mono)', fontSize: '10px', color: 'var(--text-faint)' }}>{post.readTime}</span>
+            </div>
+            <p style={{ fontFamily: 'var(--font-geist-mono)', fontSize: '13px', fontWeight: 500, color: 'var(--text)', margin: '0 0 4px', lineHeight: 1.4 }}>{post.title}</p>
+            <p style={{ fontFamily: 'var(--font-geist-mono)', fontSize: '11px', color: 'var(--text-muted)', margin: 0, lineHeight: 1.5, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{post.excerpt}</p>
+          </div>
+        </a>
+      ))}
+      <a
+        href="/mrwallace"
+        style={{
+          display: 'inline-block',
+          marginTop: '10px',
+          fontFamily: 'var(--font-geist-mono)',
+          fontSize: '11px',
+          color: 'var(--text-faint)',
+          textDecoration: 'none',
+          transition: 'color 0.15s',
+        }}
+        onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = 'var(--text)'}
+        onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = 'var(--text-faint)'}
+      >
+        view all writings →
+      </a>
+    </div>
+  );
+}
+
 function BlogPost({ post, index }: { post: Post; index: number }) {
   const [open, setOpen] = useState(false);
 
@@ -334,14 +417,12 @@ export default function LifeMd({ isActive }: SectionProps) {
               <Script src="https://w.behold.so/widget.js" type="module" strategy="afterInteractive" />
             </div>
 
-            {/* Field notes */}
+            {/* Writings */}
             <div>
               <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "10px", color: "var(--text-faint)", marginBottom: "20px" }}>
-                // field notes — writing
+                // writings — from the desk of mr. wallace
               </p>
-              {POSTS.map((post, i) => (
-                <BlogPost key={post.title} post={post} index={i} />
-              ))}
+              <WritingsFeed />
             </div>
 
           </div>

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -25,6 +25,7 @@ const CATEGORIES = [
   { id: "mr/tools", label: "mr/tools" },
   { id: "mr/lessons", label: "mr/lessons" },
   { id: "mr/brain", label: "mr/brain" },
+  { id: "mr/strategy", label: "mr/strategy" },
   { id: "mr/market", label: "mr/market" },
 ];
 

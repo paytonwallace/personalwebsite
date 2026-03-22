@@ -123,7 +123,7 @@ export default function Comments({ slug }: { slug: string }) {
           }}
         />
         {error && (
-          <p style={{ color: "#ef4444", fontSize: "13px", marginBottom: "8px" }}>{error}</p>
+          <p style={{ color: "#ef4444", fontSize: "12px", marginBottom: "8px" }}>{error}</p>
         )}
         <button
           type="submit"
@@ -135,7 +135,7 @@ export default function Comments({ slug }: { slug: string }) {
             borderRadius: "6px",
             color: "#000",
             fontFamily: "var(--font-geist-mono)",
-            fontSize: "13px",
+            fontSize: "12px",
             fontWeight: 600,
             cursor: submitting ? "not-allowed" : "pointer",
             opacity: !name.trim() || !content.trim() ? 0.4 : 1,
@@ -169,7 +169,7 @@ export default function Comments({ slug }: { slug: string }) {
               <span
                 style={{
                   fontFamily: "var(--font-geist-mono)",
-                  fontSize: "13px",
+                  fontSize: "12px",
                   color: "#22c55e",
                   fontWeight: 600,
                 }}
@@ -190,7 +190,7 @@ export default function Comments({ slug }: { slug: string }) {
               style={{
                 fontSize: "14px",
                 color: "var(--text)",
-                lineHeight: 1.6,
+                lineHeight: 1.5,
               }}
             >
               {c.content}
@@ -201,7 +201,7 @@ export default function Comments({ slug }: { slug: string }) {
           <p
             style={{
               fontFamily: "var(--font-geist-mono)",
-              fontSize: "13px",
+              fontSize: "12px",
               color: "var(--text-faint)",
             }}
           >

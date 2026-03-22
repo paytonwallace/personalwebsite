@@ -56,7 +56,7 @@ export default function BlogNav() {
 
         {/* Nav */}
         <nav style={{ flex: 1, padding: "14px 10px", overflowY: "auto" }}>
-          <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: "var(--text-faint)", textTransform: "uppercase", letterSpacing: "0.15em", padding: "0 8px", marginBottom: "6px" }}>
+          <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: "var(--text-faint)", textTransform: "uppercase", letterSpacing: "0.1em", padding: "0 8px", marginBottom: "6px" }}>
             // nav
           </p>
           {NAV_ITEMS.map((item) => (
@@ -79,7 +79,7 @@ export default function BlogNav() {
 
           {/* Writings — active */}
           <div style={{ marginTop: "8px", borderTop: "1px solid var(--border)", paddingTop: "10px" }}>
-            <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: "var(--text-faint)", textTransform: "uppercase", letterSpacing: "0.15em", padding: "0 8px", marginBottom: "6px" }}>
+            <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: "var(--text-faint)", textTransform: "uppercase", letterSpacing: "0.1em", padding: "0 8px", marginBottom: "6px" }}>
               // writings
             </p>
             <Link

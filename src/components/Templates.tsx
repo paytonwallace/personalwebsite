@@ -84,13 +84,13 @@ export default function Templates({ isActive }: SectionProps) {
                         onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.background = "var(--bg-surface-hover)")}
                         onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.background = "transparent")}
                       >
-                        <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "11px", color: "var(--text-faint)", width: "80px", paddingTop: "1px", letterSpacing: "0.02em" }}>
+                        <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "11px", color: "var(--text-faint)", width: "80px", paddingTop: "1px", letterSpacing: "0.06em" }}>
                           {t.status === "free" ? "-rw-r--r--" : "-rw-------"}
                         </span>
                         <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "11px", color: "var(--text-muted)", width: "60px", paddingTop: "1px" }}>{t.size}</span>
                         <div style={{ flex: 1 }}>
                           <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "12px", color: "var(--text)", marginBottom: "5px" }}>{t.name}</p>
-                          <p style={{ fontSize: "12px", color: "var(--text-muted)", lineHeight: 1.6 }}>{t.desc}</p>
+                          <p style={{ fontSize: "12px", color: "var(--text-muted)", lineHeight: 1.5 }}>{t.desc}</p>
                         </div>
                         <span style={{
                           fontFamily: "var(--font-geist-mono)", fontSize: "10px",

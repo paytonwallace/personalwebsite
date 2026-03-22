@@ -111,7 +111,7 @@ export default function GROWTHModal({ open, onClose }: { open: boolean; onClose:
                       >
                         <span style={{
                           fontFamily: "var(--font-geist-mono)",
-                          fontSize: "18px",
+                          fontSize: "16px",
                           fontWeight: 700,
                           color: "#fff",
                           width: "22px",
@@ -123,7 +123,7 @@ export default function GROWTHModal({ open, onClose }: { open: boolean; onClose:
                           fontFamily: "var(--font-geist-mono)",
                           fontSize: "11px",
                           color: "#555",
-                          letterSpacing: "0.08em",
+                          letterSpacing: "0.1em",
                           textTransform: "uppercase",
                           marginRight: "8px",
                           width: "16px",
@@ -148,10 +148,10 @@ export default function GROWTHModal({ open, onClose }: { open: boolean; onClose:
                   transition={{ duration: 0.5 }}
                   style={{ borderTop: "1px solid #1a1a1a", paddingTop: "32px" }}
                 >
-                  <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "10px", color: "#444", marginBottom: "12px", letterSpacing: "0.15em", textTransform: "uppercase" }}>
+                  <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "10px", color: "#444", marginBottom: "12px", letterSpacing: "0.1em", textTransform: "uppercase" }}>
                     // powered by fueled by fire
                   </p>
-                  <p style={{ fontSize: "15px", color: "#888", lineHeight: 1.75, marginBottom: "24px" }}>
+                  <p style={{ fontSize: "14px", color: "#888", lineHeight: 1.7, marginBottom: "24px" }}>
                     The ALL IN Challenge is where the G.R.O.W.T.H. framework comes alive — 3 days to
                     build a profitable, faith-forward business with your life intact.
                   </p>
@@ -165,12 +165,12 @@ export default function GROWTHModal({ open, onClose }: { open: boolean; onClose:
                         padding: "11px 28px",
                         background: "#fff",
                         color: "#000",
-                        fontSize: "13px",
+                        fontSize: "12px",
                         fontWeight: 600,
                         borderRadius: "8px",
                         textDecoration: "none",
                         fontFamily: "var(--font-geist-mono)",
-                        letterSpacing: "0.04em",
+                        letterSpacing: "0.06em",
                       }}
                     >
                       fbfchallenge.com →

@@ -63,11 +63,11 @@ export default function About({ isActive }: SectionProps) {
               <FileBlock path="~/paytoncwallace/about.md" meta="utf-8">
                 <div style={{ display: "flex", gap: "36px", flexWrap: "wrap", alignItems: "flex-start" }}>
                   <div style={{ flex: 1, minWidth: "240px" }}>
-                    <p style={{ fontSize: "15px", color: "var(--text-muted)", lineHeight: 1.8, marginBottom: "16px" }}>{ABOUT.bio1}</p>
-                    <p style={{ fontSize: "15px", color: "var(--text-muted)", lineHeight: 1.8, marginBottom: "16px" }}>{ABOUT.bio2}</p>
-                    <p style={{ fontSize: "15px", color: "var(--text-muted)", lineHeight: 1.8, marginBottom: "24px" }}>{ABOUT.bio3}</p>
+                    <p style={{ fontSize: "14px", color: "var(--text-muted)", lineHeight: 1.7, marginBottom: "16px" }}>{ABOUT.bio1}</p>
+                    <p style={{ fontSize: "14px", color: "var(--text-muted)", lineHeight: 1.7, marginBottom: "16px" }}>{ABOUT.bio2}</p>
+                    <p style={{ fontSize: "14px", color: "var(--text-muted)", lineHeight: 1.7, marginBottom: "24px" }}>{ABOUT.bio3}</p>
                     <div style={{ borderLeft: "2px solid var(--border)", paddingLeft: "16px" }}>
-                      <p style={{ fontSize: "13px", color: "var(--text-muted)", fontStyle: "italic", lineHeight: 1.7 }}>{ABOUT.quote}</p>
+                      <p style={{ fontSize: "12px", color: "var(--text-muted)", fontStyle: "italic", lineHeight: 1.7 }}>{ABOUT.quote}</p>
                     </div>
                   </div>
                   <div style={{ flexShrink: 0 }}>
@@ -82,7 +82,7 @@ export default function About({ isActive }: SectionProps) {
                       </div>
                     ) : (
                       <div style={{ width: "190px", height: "340px", border: "1px dashed var(--border)", borderRadius: "8px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "8px" }}>
-                        <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: "var(--text-faint)", textAlign: "center", lineHeight: 1.6 }}>// about.jpg</p>
+                        <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: "var(--text-faint)", textAlign: "center", lineHeight: 1.5 }}>// about.jpg</p>
                       </div>
                     )}
                   </div>
@@ -157,7 +157,7 @@ function PortfolioCard({ co, onGrowth }: { co: Co; onGrowth: () => void }) {
 
       <div style={{ padding: "14px 16px 16px" }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "8px" }}>
-          <p style={{ fontSize: "13px", fontWeight: 600, color: "var(--text)" }}>{co.name}</p>
+          <p style={{ fontSize: "12px", fontWeight: 600, color: "var(--text)" }}>{co.name}</p>
           <span style={{
             fontFamily: "var(--font-geist-mono)",
             fontSize: "9px",
@@ -166,15 +166,15 @@ function PortfolioCard({ co, onGrowth }: { co: Co; onGrowth: () => void }) {
             borderRadius: "4px",
             padding: "2px 6px",
             textTransform: "uppercase",
-            letterSpacing: "0.08em",
+            letterSpacing: "0.1em",
           }}>
             {co.status}
           </span>
         </div>
-        <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: "var(--text-faint)", marginBottom: "8px", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+        <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: "var(--text-faint)", marginBottom: "8px", textTransform: "uppercase", letterSpacing: "0.1em" }}>
           {co.role}
         </p>
-        <p style={{ fontSize: "11px", color: "var(--text-muted)", lineHeight: 1.6 }}>{co.description}</p>
+        <p style={{ fontSize: "12px", color: "var(--text-muted)", lineHeight: 1.5 }}>{co.description}</p>
         {co.action === "growth" && (
           <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: "var(--text-faint)", marginTop: "10px" }}>
             click → G.R.O.W.T.H. ↗

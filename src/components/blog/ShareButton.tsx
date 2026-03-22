@@ -37,7 +37,7 @@ export default function ShareButton({ title, slug }: { title: string; slug: stri
         borderRadius: "6px",
         color: "var(--text-muted)",
         fontFamily: "var(--font-geist-mono)",
-        fontSize: "13px",
+        fontSize: "12px",
         cursor: "pointer",
         transition: "all 0.15s ease",
       }}

@@ -51,7 +51,7 @@ function TypewriterLine({
       <span
         style={{
           fontFamily: "var(--font-geist-mono)",
-          fontSize: "13px",
+          fontSize: "12px",
           color,
           lineHeight: "20px",
         }}

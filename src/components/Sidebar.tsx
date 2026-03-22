@@ -71,7 +71,7 @@ export default function Sidebar({ activePage, onNavigate }: SidebarProps) {
 
         {/* Nav */}
         <nav style={{ flex: 1, padding: "14px 10px", overflowY: "auto" }}>
-          <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: "var(--text-faint)", textTransform: "uppercase", letterSpacing: "0.15em", padding: "0 8px", marginBottom: "6px" }}>
+          <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: "var(--text-faint)", textTransform: "uppercase", letterSpacing: "0.1em", padding: "0 8px", marginBottom: "6px" }}>
             // nav
           </p>
           {navItems.map((item) => {
@@ -105,7 +105,7 @@ export default function Sidebar({ activePage, onNavigate }: SidebarProps) {
 
           {/* Writings */}
           <div style={{ marginTop: "8px", borderTop: "1px solid var(--border)", paddingTop: "10px" }}>
-            <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: "var(--text-faint)", textTransform: "uppercase", letterSpacing: "0.15em", padding: "0 8px", marginBottom: "6px" }}>
+            <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: "var(--text-faint)", textTransform: "uppercase", letterSpacing: "0.1em", padding: "0 8px", marginBottom: "6px" }}>
               // writings
             </p>
             <Link

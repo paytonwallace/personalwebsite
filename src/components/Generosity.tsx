@@ -178,7 +178,7 @@ export default function Generosity({ isActive }: SectionProps) {
                     <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: "#22c55e", width: "12px", flexShrink: 0, paddingTop: "3px", opacity: line.verse ? 1 : 0 }}>
                       {line.verse}
                     </span>
-                    <p style={{ fontSize: "14px", color: "var(--text-muted)", lineHeight: 1.85, fontStyle: "italic", margin: 0 }}>
+                    <p style={{ fontSize: "14px", color: "var(--text-muted)", lineHeight: 1.7, fontStyle: "italic", margin: 0 }}>
                       {line.text}
                     </p>
                   </motion.div>
@@ -214,15 +214,15 @@ export default function Generosity({ isActive }: SectionProps) {
 
                 {/* Info + CTA */}
                 <div style={{ padding: "28px" }}>
-                  <h3 style={{ fontSize: "18px", fontWeight: 600, color: "var(--text)", marginBottom: "14px", letterSpacing: "-0.01em" }}>
+                  <h3 style={{ fontSize: "16px", fontWeight: 600, color: "var(--text)", marginBottom: "14px", letterSpacing: "0" }}>
                     Epiphany Global
                   </h3>
-                  <p style={{ fontSize: "14px", color: "var(--text-muted)", lineHeight: 1.8, marginBottom: "14px" }}>
+                  <p style={{ fontSize: "14px", color: "var(--text-muted)", lineHeight: 1.7, marginBottom: "14px" }}>
                     When you build and give to Epiphany Global, you&apos;re not just meeting a need —
                     you&apos;re fulfilling the mandate. Feed the hungry. Clothe the poor. Care for the widows
                     and orphans. Share the hope of Jesus Christ.
                   </p>
-                  <p style={{ fontSize: "14px", color: "var(--text-muted)", lineHeight: 1.8, marginBottom: "28px" }}>
+                  <p style={{ fontSize: "14px", color: "var(--text-muted)", lineHeight: 1.7, marginBottom: "28px" }}>
                     Our current project: the{" "}
                     <strong style={{ color: "var(--text)" }}>Epiphany Gathering Place in Gulu, Uganda</strong>{" "}
                     — a safe haven where thousands of children will learn, play, dream, and encounter
@@ -244,7 +244,7 @@ export default function Generosity({ isActive }: SectionProps) {
                       borderRadius: "8px",
                       textDecoration: "none",
                       fontFamily: "var(--font-geist-mono)",
-                      letterSpacing: "0.04em",
+                      letterSpacing: "0.06em",
                     }}
                   >
                     <span style={{ color: "#28c840" }}>■</span>

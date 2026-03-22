@@ -62,7 +62,7 @@ function ContactForm({ onBack }: { onBack: () => void }) {
   return (
     <div style={{ fontFamily: "var(--font-geist-mono)", fontSize: "11px", display: "flex", flexDirection: "column", height: "100%" }}>
       {/* Back */}
-      <button onClick={onBack} style={{ background: "none", border: "none", color: "var(--text-faint)", fontSize: "10px", fontFamily: "var(--font-geist-mono)", padding: "0 0 12px 0", textAlign: "left", letterSpacing: "0.04em" }}>
+      <button onClick={onBack} style={{ background: "none", border: "none", color: "var(--text-faint)", fontSize: "10px", fontFamily: "var(--font-geist-mono)", padding: "0 0 12px 0", textAlign: "left", letterSpacing: "0.06em" }}>
         ← back
       </button>
 
@@ -209,7 +209,7 @@ function NavBar({ onNavigate }: { onNavigate: (page: Page) => void }) {
       {/* Back */}
       {stack.length > 0 && (
         <button onClick={back}
-          style={{ fontFamily: "var(--font-geist-mono)", fontSize: "10px", color: "var(--text-faint)", background: "none", border: "none", padding: "0 12px 0 0", letterSpacing: "0.02em" }}
+          style={{ fontFamily: "var(--font-geist-mono)", fontSize: "10px", color: "var(--text-faint)", background: "none", border: "none", padding: "0 12px 0 0", letterSpacing: "0.06em" }}
           onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--text)")}
           onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "var(--text-faint)")}
         >
@@ -304,7 +304,7 @@ export default function Hero({ isActive, onNavigate }: SectionProps) {
               </motion.p>
 
               <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={s(1)}
-                style={{ fontSize: "clamp(40px, 5.5vw, 72px)", fontWeight: 600, lineHeight: 1.0, letterSpacing: "-0.03em", color: "var(--text)", marginBottom: "10px" }}>
+                style={{ fontSize: "clamp(40px, 5.5vw, 72px)", fontWeight: 700, lineHeight: 1.0, letterSpacing: "-0.02em", color: "var(--text)", marginBottom: "10px" }}>
                 Payton<br />Wallace
               </motion.h1>
 
@@ -321,18 +321,18 @@ export default function Hero({ isActive, onNavigate }: SectionProps) {
               </motion.div>
 
               <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={s(3)}
-                style={{ fontSize: "15px", color: "var(--text-muted)", lineHeight: 1.75, maxWidth: isMobile ? "100%" : "420px", marginBottom: "20px" }}>
+                style={{ fontSize: "14px", color: "var(--text-muted)", lineHeight: 1.7, maxWidth: isMobile ? "100%" : "420px", marginBottom: "20px" }}>
                 CEO Mentor &amp; Strategic Architect. Helping entrepreneurs &amp; leaders clarify and fulfill their God sized vision.
               </motion.p>
 
               <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={s(4)}
                 style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
                 <button onClick={() => { setShowForm(true); }}
-                  style={{ padding: "10px 24px", background: "var(--text)", color: "var(--bg)", fontSize: "13px", fontWeight: 500, borderRadius: "8px", border: "none", letterSpacing: "0.02em" }}>
+                  style={{ padding: "10px 24px", background: "var(--text)", color: "var(--bg)", fontSize: "12px", fontWeight: 500, borderRadius: "8px", border: "none", letterSpacing: "0.06em" }}>
                   Work With Me
                 </button>
                 <button onClick={() => onNavigate?.("tools")}
-                  style={{ padding: "10px 24px", background: "transparent", color: "var(--text)", fontSize: "13px", fontWeight: 500, borderRadius: "8px", border: "1px solid var(--border)", letterSpacing: "0.02em" }}>
+                  style={{ padding: "10px 24px", background: "transparent", color: "var(--text)", fontSize: "12px", fontWeight: 500, borderRadius: "8px", border: "1px solid var(--border)", letterSpacing: "0.06em" }}>
                   Browse Tools
                 </button>
               </motion.div>

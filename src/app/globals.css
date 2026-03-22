@@ -29,6 +29,15 @@ html { scroll-behavior: smooth; }
   --yellow:          rgba(253, 224, 71, 0.18);
 }
 
+/* ── TYPE SCALE ─────────────────────────────────────────────────────────── */
+/* See src/DESIGN-SYSTEM.md for full documentation.                         */
+/* label: 9px  | caption: 10px | small: 11px | ui: 12px | body: 14px      */
+/* subhead: 16px | heading: 22px | title: 28px | display: 32px            */
+/* hero: clamp(40px, 5.5vw, 72px)                                          */
+/* Weights: 400 normal · 500 medium · 600 semibold · 700 bold              */
+/* Line-heights: 1.0 none · 1.3 tight · 1.5 normal · 1.7 relaxed          */
+/* Letter-spacing: -0.02em tight · 0 normal · 0.06em wide · 0.1em wider   */
+
 /* ── BASE ───────────────────────────────────────────────────────────────── */
 body {
   background-color: var(--bg);
@@ -92,11 +101,11 @@ html { overflow-x: hidden; }
 
 /* ── MR.WALLACE ARTICLE STYLES ─────────────────────────────────────────── */
 .mrw-article h2 {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
   color: var(--text);
   margin: 36px 0 12px;
-  letter-spacing: -0.3px;
+  letter-spacing: -0.02em;
 }
 .mrw-article h3 {
   font-size: 16px;
@@ -105,7 +114,7 @@ html { overflow-x: hidden; }
   margin: 28px 0 10px;
 }
 .mrw-article p {
-  font-size: 15px;
+  font-size: 14px;
   color: var(--text-muted);
   line-height: 1.7;
   margin: 0 0 16px;
@@ -124,7 +133,7 @@ html { overflow-x: hidden; }
   padding-left: 24px;
 }
 .mrw-article li {
-  font-size: 15px;
+  font-size: 14px;
   color: var(--text-muted);
   line-height: 1.7;
   margin-bottom: 4px;
@@ -149,12 +158,12 @@ html { overflow-x: hidden; }
   overflow-x: auto;
   margin: 20px 0;
   font-family: var(--font-geist-mono);
-  font-size: 13px;
-  line-height: 1.6;
+  font-size: 12px;
+  line-height: 1.5;
 }
 .mrw-article code {
   font-family: var(--font-geist-mono);
-  font-size: 13px;
+  font-size: 12px;
   color: #22c55e;
 }
 .mrw-article pre code {

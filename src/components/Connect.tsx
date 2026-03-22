@@ -160,7 +160,7 @@ function TerminalForm() {
                     fontSize: "12px",
                     color: "var(--text)",
                     resize: "none",
-                    lineHeight: 1.6,
+                    lineHeight: 1.5,
                   }}
                 />
               ) : (
@@ -272,7 +272,7 @@ export default function Connect({ isActive }: SectionProps) {
                   >
                     <IGIcon size={22} />
                     <div>
-                      <p style={{ fontSize: "13px", fontWeight: 500, color: "var(--text)", marginBottom: "2px" }}>@paytoncwallace</p>
+                      <p style={{ fontSize: "12px", fontWeight: 500, color: "var(--text)", marginBottom: "2px" }}>@paytoncwallace</p>
                       <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "10px", color: "var(--text-faint)" }}>most active · behind the scenes ↗</p>
                     </div>
                   </a>

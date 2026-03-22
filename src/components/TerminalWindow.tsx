@@ -41,7 +41,7 @@ export default function TerminalWindow({ title = "zsh", children, noPadding, sty
             color: "var(--text-faint)",
             flex: 1,
             textAlign: "center",
-            letterSpacing: "0.02em",
+            letterSpacing: "0.06em",
           }}
         >
           {title}

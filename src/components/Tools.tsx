@@ -49,15 +49,15 @@ function TechCard({ item }: { item: TechItem }) {
               <img src={item.logo} alt={item.name} width={24} height={24} style={{ objectFit: "contain" }} onError={() => setLogoError(true)} />
             </div>
           ) : (
-            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "15px", fontWeight: 700, color: "rgba(255,255,255,0.9)", zIndex: 1 }}>{item.name[0]}</span>
+            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "14px", fontWeight: 700, color: "rgba(255,255,255,0.9)", zIndex: 1 }}>{item.name[0]}</span>
           )}
         </div>
         <div style={{ padding: "10px 12px 12px" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "4px" }}>
             <p style={{ fontSize: "12px", fontWeight: 600, color: "var(--text)" }}>{item.name}</p>
-            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "8px", color: "var(--text-faint)", border: "1px solid var(--border)", borderRadius: "3px", padding: "1px 5px", textTransform: "uppercase" as const, letterSpacing: "0.06em" }}>{item.category}</span>
+            <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: "var(--text-faint)", border: "1px solid var(--border)", borderRadius: "3px", padding: "1px 5px", textTransform: "uppercase" as const, letterSpacing: "0.06em" }}>{item.category}</span>
           </div>
-          <p style={{ fontSize: "10px", color: "var(--text-muted)", lineHeight: 1.6 }}>{item.desc}</p>
+          <p style={{ fontSize: "10px", color: "var(--text-muted)", lineHeight: 1.5 }}>{item.desc}</p>
         </div>
       </div>
     </a>
@@ -111,11 +111,11 @@ function TemplateCard({ item, index, onSelect }: { item: TemplateItem; index: nu
       <div style={{ height: "4px", background: accent, flexShrink: 0 }} />
       <div style={{ padding: "20px", flex: 1, display: "flex", flexDirection: "column" }}>
         <div style={{ marginBottom: "10px" }}>
-          <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: accent, border: `1px solid ${accent}44`, borderRadius: "4px", padding: "2px 6px", textTransform: "uppercase" as const, letterSpacing: "0.08em" }}>
+          <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: accent, border: `1px solid ${accent}44`, borderRadius: "4px", padding: "2px 6px", textTransform: "uppercase" as const, letterSpacing: "0.1em" }}>
             {item.tag}
           </span>
         </div>
-        <p style={{ fontSize: "14px", fontWeight: 600, color: "var(--text)", marginBottom: "8px", letterSpacing: "-0.01em" }}>{item.name}</p>
+        <p style={{ fontSize: "14px", fontWeight: 600, color: "var(--text)", marginBottom: "8px", letterSpacing: "0" }}>{item.name}</p>
         <p style={{ fontSize: "12px", color: "var(--text-muted)", lineHeight: 1.7, flex: 1, marginBottom: "16px" }}>{item.desc}</p>
         <div style={{
           display: "inline-flex", alignItems: "center", gap: "6px", fontFamily: "var(--font-geist-mono)",
@@ -199,25 +199,25 @@ function TemplateDetail({ item, index, onBack, isMobile }: { item: TemplateItem;
           </span>
 
           {/* Name */}
-          <h1 style={{ fontSize: isMobile ? "26px" : "32px", fontWeight: 700, color: "var(--text)", letterSpacing: "-0.03em", marginTop: "12px", marginBottom: "12px" }}>
+          <h1 style={{ fontSize: isMobile ? "28px" : "32px", fontWeight: 700, color: "var(--text)", letterSpacing: "-0.02em", marginTop: "12px", marginBottom: "12px" }}>
             {item.name}
           </h1>
 
           {/* Description */}
-          <p style={{ fontSize: "15px", color: "var(--text-muted)", lineHeight: 1.75, marginBottom: "28px" }}>
+          <p style={{ fontSize: "14px", color: "var(--text-muted)", lineHeight: 1.7, marginBottom: "28px" }}>
             {item.desc}
           </p>
 
           {/* Features */}
           <div style={{ marginBottom: "32px" }}>
-            <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "10px", color: "var(--text-faint)", marginBottom: "12px", textTransform: "uppercase" as const, letterSpacing: "0.08em" }}>
+            <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "10px", color: "var(--text-faint)", marginBottom: "12px", textTransform: "uppercase" as const, letterSpacing: "0.1em" }}>
               what&apos;s inside
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
               {item.features.map((f, i) => (
                 <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
                   <span style={{ color: accent, flexShrink: 0, marginTop: "2px", fontSize: "12px" }}>→</span>
-                  <p style={{ fontSize: "13px", color: "var(--text-muted)", lineHeight: 1.6 }}>{f}</p>
+                  <p style={{ fontSize: "12px", color: "var(--text-muted)", lineHeight: 1.5 }}>{f}</p>
                 </div>
               ))}
             </div>
@@ -411,7 +411,7 @@ export default function Tools({ isActive }: SectionProps) {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "20px" }}>
                   <div>
                     <h2 style={{ fontSize: "22px", fontWeight: 600, color: "var(--text)", letterSpacing: "-0.02em", marginBottom: "6px" }}>tech stack</h2>
-                    <p style={{ fontSize: "13px", color: "var(--text-muted)" }}>tools I run on every day</p>
+                    <p style={{ fontSize: "12px", color: "var(--text-muted)" }}>tools I run on every day</p>
                   </div>
                   <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "10px", color: "var(--text-faint)" }}>{TOOLS_TECH.length} tools</span>
                 </div>
@@ -435,7 +435,7 @@ export default function Tools({ isActive }: SectionProps) {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "20px" }}>
                   <div>
                     <h2 style={{ fontSize: "22px", fontWeight: 600, color: "var(--text)", letterSpacing: "-0.02em", marginBottom: "6px" }}>library</h2>
-                    <p style={{ fontSize: "13px", color: "var(--text-muted)" }}>what I recommend to every founder I work with</p>
+                    <p style={{ fontSize: "12px", color: "var(--text-muted)" }}>what I recommend to every founder I work with</p>
                   </div>
                   <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "10px", color: "var(--text-faint)" }}>{TOOLS_BOOKS.length} books</span>
                 </div>
@@ -455,11 +455,11 @@ export default function Tools({ isActive }: SectionProps) {
                               <div style={{ flex: 1, minWidth: 0 }}>
                                 <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap", marginBottom: "2px" }}>
                                   <p style={{ fontSize: "12px", color: "var(--text)", fontWeight: 500 }}>{b.title}</p>
-                                  <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "8px", color: "var(--text-faint)", border: "1px solid var(--border)", borderRadius: "3px", padding: "1px 5px", textTransform: "uppercase" as const, letterSpacing: "0.05em", flexShrink: 0 }}>{b.category}</span>
+                                  <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: "var(--text-faint)", border: "1px solid var(--border)", borderRadius: "3px", padding: "1px 5px", textTransform: "uppercase" as const, letterSpacing: "0.06em", flexShrink: 0 }}>{b.category}</span>
                                 </div>
                                 <p style={{ fontSize: "10px", color: "var(--text-muted)", marginBottom: "5px" }}>{b.author}</p>
                                 {"desc" in b && b.desc && (
-                                  <p style={{ fontSize: "10px", color: "var(--text-faint)", lineHeight: 1.65 }}>{b.desc}</p>
+                                  <p style={{ fontSize: "10px", color: "var(--text-faint)", lineHeight: 1.7 }}>{b.desc}</p>
                                 )}
                               </div>
                               <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: "var(--text-faint)", flexShrink: 0, marginTop: "2px" }}>↗</span>
@@ -477,7 +477,7 @@ export default function Tools({ isActive }: SectionProps) {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "20px" }}>
                   <div>
                     <h2 style={{ fontSize: "22px", fontWeight: 600, color: "var(--text)", letterSpacing: "-0.02em", marginBottom: "6px" }}>notion templates</h2>
-                    <p style={{ fontSize: "13px", color: "var(--text-muted)" }}>systems I actually use — built for founders scaling with intention</p>
+                    <p style={{ fontSize: "12px", color: "var(--text-muted)" }}>systems I actually use — built for founders scaling with intention</p>
                   </div>
                   <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "10px", color: "var(--text-faint)" }}>{TOOLS_TEMPLATES.length} templates</span>
                 </div>

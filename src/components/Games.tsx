@@ -69,7 +69,7 @@ function LeaderboardPanel({ game, onBack, onPlayAgain, message }: {
       ) : scores.length === 0 ? (
         <p style={{ fontSize: 12, color: "var(--text-faint)" }}>no scores yet. be the first!</p>
       ) : (
-        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12 }}>
           <thead>
             <tr style={{ color: "var(--text-faint)", fontSize: 11 }}>
               <th style={{ textAlign: "left", padding: "4px 0", fontWeight: 400 }}>#</th>
@@ -137,7 +137,7 @@ function ScoreSubmitForm({ game, score, onDone, onSkip }: {
       background: "#0a0a0a", border: "1px solid var(--border)", borderRadius: 8,
       padding: "20px", maxWidth: 320, width: "100%", fontFamily: "var(--font-geist-mono)",
     }}>
-      <p style={{ fontSize: 13, color: "var(--text)", marginBottom: 4 }}>
+      <p style={{ fontSize: 12, color: "var(--text)", marginBottom: 4 }}>
         score: <span style={{ color: "#eab308", fontWeight: 700 }}>{score}</span>
       </p>
       <p style={{ fontSize: 11, color: "var(--text-faint)", marginBottom: 12 }}>submit to leaderboard</p>
@@ -204,10 +204,10 @@ function MWBoot({ onComplete }: { onComplete: () => void }) {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const lines = [
-    { text: 'mr.wallace console  v1.0', style: { color: "#fff", fontSize: "18px" } },
-    { text: 'initializing game room...', style: { color: "#6a6a6a", fontSize: "13px" } },
+    { text: 'mr.wallace console  v1.0', style: { color: "#fff", fontSize: "16px" } },
+    { text: 'initializing game room...', style: { color: "#6a6a6a", fontSize: "12px" } },
     { text: '__BAR__', style: {} },
-    { text: 'system ready.', style: { color: "#6a6a6a", fontSize: "13px" } },
+    { text: 'system ready.', style: { color: "#6a6a6a", fontSize: "12px" } },
   ];
 
   const skip = useCallback(() => {
@@ -327,7 +327,7 @@ function MWBoot({ onComplete }: { onComplete: () => void }) {
             </div>
           )}
           {line >= 3 && (
-            <div style={{ color: "#22c55e", fontSize: "13px", fontFamily: "var(--font-geist-mono)" }}>
+            <div style={{ color: "#22c55e", fontSize: "12px", fontFamily: "var(--font-geist-mono)" }}>
               {barStr(barWidth)}
             </div>
           )}
@@ -494,7 +494,7 @@ function SnakeGame({ onGameOver }: { onGameOver?: (score: number) => void }) {
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
       <div style={{ width: COLS * CELL, display: "flex", justifyContent: "space-between" }}>
         <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "var(--text-faint)" }}>// snake</span>
-        <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "var(--text)", fontWeight: 600 }}>score: {score}</span>
+        <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 12, color: "var(--text)", fontWeight: 600 }}>score: {score}</span>
       </div>
       <canvas ref={canvasRef} width={COLS * CELL} height={ROWS * CELL}
         style={{ border: "1px solid var(--border)", borderRadius: 4, cursor: "pointer", display: "block" }}
@@ -671,7 +671,7 @@ function PongGame({ onGameOver }: { onGameOver?: (score: number) => void }) {
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
       <div style={{ width: PONG_W, display: "flex", justifyContent: "space-between" }}>
         <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "var(--text-faint)" }}>// pong</span>
-        <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "var(--text)", fontWeight: 600 }}>{scores.p} : {scores.a}</span>
+        <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 12, color: "var(--text)", fontWeight: 600 }}>{scores.p} : {scores.a}</span>
       </div>
       <canvas ref={canvasRef} width={PONG_W} height={PONG_H}
         style={{ border: "1px solid var(--border)", borderRadius: 4, cursor: "pointer", display: "block" }}
@@ -895,7 +895,7 @@ function BreakoutGame({ onGameOver }: { onGameOver?: (score: number) => void }) 
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
       <div style={{ width: BRK_W, display: "flex", justifyContent: "space-between" }}>
         <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "var(--text-faint)" }}>// breakout</span>
-        <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "var(--text)", fontWeight: 600 }}>score: {score} | ♥{lives}</span>
+        <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 12, color: "var(--text)", fontWeight: 600 }}>score: {score} | ♥{lives}</span>
       </div>
       <canvas ref={canvasRef} width={BRK_W} height={BRK_H}
         style={{ border: "1px solid var(--border)", borderRadius: 4, cursor: "pointer", display: "block" }}
@@ -1101,7 +1101,7 @@ function TicTacToeGame() {
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
       <div style={{ width: TTT_SIZE, display: "flex", justifyContent: "space-between" }}>
         <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "var(--text-faint)" }}>// tic-tac-toe</span>
-        <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "var(--text)", fontWeight: 600 }}>
+        <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 12, color: "var(--text)", fontWeight: 600 }}>
           <span style={{ color: "#22c55e" }}>X</span> you vs <span style={{ color: "#3b82f6" }}>O</span> ai
         </span>
       </div>
@@ -1361,7 +1361,7 @@ function TetrisGame({ onGameOver }: { onGameOver?: (score: number) => void }) {
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
       <div style={{ width: TET_COLS * TET_CELL + 100, display: "flex", justifyContent: "space-between" }}>
         <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "var(--text-faint)" }}>// tetris.exe</span>
-        <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "var(--text)", fontWeight: 600 }}>score: {score} · lvl {level}</span>
+        <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 12, color: "var(--text)", fontWeight: 600 }}>score: {score} · lvl {level}</span>
       </div>
       <canvas ref={canvasRef} width={TET_COLS * TET_CELL + 100} height={TET_ROWS * TET_CELL}
         style={{ border: "1px solid var(--border)", borderRadius: 4, display: "block" }}
@@ -1582,7 +1582,7 @@ function Game2048({ onGameOver }: { onGameOver?: (score: number) => void }) {
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
       <div style={{ width: G48_W, display: "flex", justifyContent: "space-between" }}>
         <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "var(--text-faint)" }}>// 2048.exe</span>
-        <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "var(--text)", fontWeight: 600 }}>score: {score}</span>
+        <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 12, color: "var(--text)", fontWeight: 600 }}>score: {score}</span>
       </div>
       <div style={{ position: "relative" }}>
         <canvas ref={canvasRef} width={G48_W} height={G48_W}
@@ -1813,7 +1813,7 @@ function FlappyGame({ onGameOver }: { onGameOver?: (score: number) => void }) {
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
       <div style={{ width: FLP_W, display: "flex", justifyContent: "space-between" }}>
         <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "var(--text-faint)" }}>// flappy.exe</span>
-        <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "var(--text)", fontWeight: 600 }}>score: {score} · best: {highScore}</span>
+        <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 12, color: "var(--text)", fontWeight: 600 }}>score: {score} · best: {highScore}</span>
       </div>
       <canvas ref={canvasRef} width={FLP_W} height={FLP_H}
         style={{ border: "1px solid var(--border)", borderRadius: 4, cursor: "pointer", display: "block" }}
@@ -2139,7 +2139,7 @@ function InvadersGame({ onGameOver }: { onGameOver?: (score: number) => void }) 
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
       <div style={{ width: INV_W, display: "flex", justifyContent: "space-between" }}>
         <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 11, color: "var(--text-faint)" }}>// invaders.exe</span>
-        <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 13, color: "var(--text)", fontWeight: 600 }}>score: {score} · ♥{lives}</span>
+        <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: 12, color: "var(--text)", fontWeight: 600 }}>score: {score} · ♥{lives}</span>
       </div>
       <canvas ref={canvasRef} width={INV_W} height={INV_H}
         style={{ border: "1px solid var(--border)", borderRadius: 4, display: "block" }}

@@ -108,7 +108,7 @@ export default function ArticleClient({ slug, title, category, date, readTime, c
             href="/mrwallace"
             style={{
               fontFamily: "var(--font-geist-mono)",
-              fontSize: "13px",
+              fontSize: "12px",
               color: "var(--text-faint)",
               textDecoration: "none",
               transition: "color 0.15s ease",
@@ -197,7 +197,7 @@ export default function ArticleClient({ slug, title, category, date, readTime, c
             color: "var(--text)",
             lineHeight: 1.3,
             marginBottom: "40px",
-            letterSpacing: "-0.5px",
+            letterSpacing: "-0.02em",
           }}
         >
           {title}
@@ -206,7 +206,7 @@ export default function ArticleClient({ slug, title, category, date, readTime, c
         {/* MDX Content */}
         <div className="mrw-article">
           {mdxSource ? <MDXRemote {...mdxSource} /> : (
-            <p style={{ color: "var(--text-faint)", fontFamily: "var(--font-geist-mono)", fontSize: "13px" }}>
+            <p style={{ color: "var(--text-faint)", fontFamily: "var(--font-geist-mono)", fontSize: "12px" }}>
               loading article...
             </p>
           )}
@@ -244,7 +244,7 @@ export default function ArticleClient({ slug, title, category, date, readTime, c
               color: "#000",
               borderRadius: "6px",
               fontFamily: "var(--font-geist-mono)",
-              fontSize: "13px",
+              fontSize: "12px",
               fontWeight: 600,
               textDecoration: "none",
               transition: "opacity 0.15s ease",

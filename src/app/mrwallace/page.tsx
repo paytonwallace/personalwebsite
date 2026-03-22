@@ -102,14 +102,17 @@ export default function MrWallacePage() {
         }}
       >
         <div style={{ maxWidth: "720px", margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: "20px" }}>
+            <img src="/mr-wallace-logo.png" alt="Mr. Wallace" style={{ maxWidth: "200px", height: "auto" }} />
+          </div>
           <h1
             style={{
               fontFamily: "var(--font-geist-mono)",
-              fontSize: "24px",
+              fontSize: "28px",
               fontWeight: 700,
               color: "var(--text)",
               marginBottom: "6px",
-              letterSpacing: "-0.5px",
+              letterSpacing: "-0.02em",
             }}
           >
             /mrwallace
@@ -117,7 +120,7 @@ export default function MrWallacePage() {
           <p
             style={{
               fontFamily: "var(--font-geist-mono)",
-              fontSize: "13px",
+              fontSize: "12px",
               color: "var(--text-faint)",
             }}
           >
@@ -170,7 +173,7 @@ export default function MrWallacePage() {
       {/* Posts feed */}
       <main style={{ maxWidth: "720px", margin: "0 auto", padding: "16px 24px 80px" }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}>
-          <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "11px", color: "var(--text-faint)", textTransform: "uppercase", letterSpacing: "0.14em" }}>
+          <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "11px", color: "var(--text-faint)", textTransform: "uppercase", letterSpacing: "0.1em" }}>
             // recent writings
           </p>
           <p style={{ fontFamily: "var(--font-geist-mono)", fontSize: "10px", color: "var(--text-faint)" }}>
@@ -258,11 +261,11 @@ export default function MrWallacePage() {
                     {/* Title */}
                     <h2
                       style={{
-                        fontSize: "17px",
+                        fontSize: "16px",
                         fontWeight: 600,
                         color: "var(--text)",
                         marginBottom: "6px",
-                        lineHeight: 1.4,
+                        lineHeight: 1.3,
                       }}
                     >
                       {post.title}

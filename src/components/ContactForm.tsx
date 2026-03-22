@@ -37,7 +37,7 @@ export default function ContactForm({ isActive }: { isActive: boolean }) {
     border: "1px solid var(--border)",
     borderRadius: "8px",
     padding: "12px 16px",
-    fontSize: "13px",
+    fontSize: "12px",
     color: "var(--text)",
     outline: "none",
     fontFamily: "var(--font-geist-sans)",
@@ -54,13 +54,13 @@ export default function ContactForm({ isActive }: { isActive: boolean }) {
         {revealed && (
           <>
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={s(0)}
-              style={{ fontFamily: "var(--font-geist-mono)", fontSize: "10px", color: "var(--text-faint)", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "16px" }}
+              style={{ fontFamily: "var(--font-geist-mono)", fontSize: "10px", color: "var(--text-faint)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "16px" }}
             >
               // contact
             </motion.p>
 
             <motion.h2 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={s(1)}
-              style={{ fontSize: "32px", fontWeight: 400, color: "var(--text)", marginBottom: "12px", letterSpacing: "-0.01em" }}
+              style={{ fontSize: "28px", fontWeight: 600, color: "var(--text)", marginBottom: "12px", letterSpacing: "-0.02em" }}
             >
               Let&apos;s connect.
             </motion.h2>
@@ -90,7 +90,7 @@ export default function ContactForm({ isActive }: { isActive: boolean }) {
                 <p style={{ fontSize: "16px", color: "var(--text)", fontWeight: 500, marginBottom: "8px" }}>
                   I&apos;ll be in touch soon.
                 </p>
-                <p style={{ fontSize: "13px", color: "var(--text-muted)" }}>— payton</p>
+                <p style={{ fontSize: "12px", color: "var(--text-muted)" }}>— payton</p>
               </motion.div>
             ) : (
               <motion.form
@@ -103,7 +103,7 @@ export default function ContactForm({ isActive }: { isActive: boolean }) {
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
                   {["name", "email"].map((field) => (
                     <div key={field}>
-                      <label style={{ display: "block", fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: "var(--text-faint)", textTransform: "uppercase", letterSpacing: "0.15em", marginBottom: "8px" }}>
+                      <label style={{ display: "block", fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: "var(--text-faint)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "8px" }}>
                         {field}
                       </label>
                       <input
@@ -121,7 +121,7 @@ export default function ContactForm({ isActive }: { isActive: boolean }) {
                 </div>
 
                 <div>
-                  <label style={{ display: "block", fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: "var(--text-faint)", textTransform: "uppercase", letterSpacing: "0.15em", marginBottom: "8px" }}>
+                  <label style={{ display: "block", fontFamily: "var(--font-geist-mono)", fontSize: "9px", color: "var(--text-faint)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "8px" }}>
                     message
                   </label>
                   <textarea
@@ -150,14 +150,14 @@ export default function ContactForm({ isActive }: { isActive: boolean }) {
                     padding: "11px 28px",
                     background: "var(--text)",
                     color: "var(--bg)",
-                    fontSize: "13px",
+                    fontSize: "12px",
                     fontWeight: 500,
                     borderRadius: "8px",
                     border: "none",
                     cursor: status === "sending" ? "not-allowed" : "pointer",
                     opacity: status === "sending" ? 0.6 : 1,
                     transition: "opacity 0.15s",
-                    letterSpacing: "0.02em",
+                    letterSpacing: "0.06em",
                   }}
                 >
                   {status === "sending" ? "sending..." : "Send Message"}

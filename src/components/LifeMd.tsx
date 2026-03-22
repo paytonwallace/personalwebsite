@@ -48,7 +48,7 @@ function CrackField({ label, value, crackAt, startedAt }: { label: string; value
       <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "11px", color: "var(--text-faint)", width: "76px", flexShrink: 0, letterSpacing: "0.06em" }}>
         [{label}]
       </span>
-      <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "13px", fontWeight: cracked ? 600 : 400, color: cracked ? (isAccess ? "#22c55e" : "var(--text)") : "#555", minWidth: "180px", transition: "color 0.2s" }}>
+      <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "12px", fontWeight: cracked ? 600 : 400, color: cracked ? (isAccess ? "#22c55e" : "var(--text)") : "#555", minWidth: "180px", transition: "color 0.2s" }}>
         {display}
       </span>
       {cracked && (
@@ -98,7 +98,7 @@ function HackAnimation({ onDone }: { onDone: () => void }) {
     <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "64px 56px" }}>
       <div style={{ maxWidth: "520px", width: "100%" }}>
         <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-          style={{ fontFamily: "var(--font-geist-mono)", fontSize: "11px", color: "var(--text-faint)", marginBottom: "28px", letterSpacing: "0.08em" }}>
+          style={{ fontFamily: "var(--font-geist-mono)", fontSize: "11px", color: "var(--text-faint)", marginBottom: "28px", letterSpacing: "0.1em" }}>
           INITIATING BREACH PROTOCOL...
         </motion.p>
         {FIELDS.map((field) => (
@@ -244,7 +244,7 @@ function WritingsFeed() {
               <span style={{ fontFamily: 'var(--font-geist-mono)', fontSize: '10px', color: 'var(--text-faint)' }}>{formatDate(post.date)}</span>
               <span style={{ fontFamily: 'var(--font-geist-mono)', fontSize: '10px', color: 'var(--text-faint)' }}>{post.readTime}</span>
             </div>
-            <p style={{ fontFamily: 'var(--font-geist-mono)', fontSize: '13px', fontWeight: 500, color: 'var(--text)', margin: '0 0 4px', lineHeight: 1.4 }}>{post.title}</p>
+            <p style={{ fontFamily: 'var(--font-geist-mono)', fontSize: '12px', fontWeight: 500, color: 'var(--text)', margin: '0 0 4px', lineHeight: 1.3 }}>{post.title}</p>
             <p style={{ fontFamily: 'var(--font-geist-mono)', fontSize: '11px', color: 'var(--text-muted)', margin: 0, lineHeight: 1.5, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{post.excerpt}</p>
           </div>
         </a>
@@ -314,7 +314,7 @@ function BlogPost({ post, index }: { post: Post; index: number }) {
               background: post.tagColor,
               borderRadius: "4px",
               padding: "3px 8px",
-              letterSpacing: "0.08em",
+              letterSpacing: "0.1em",
               textTransform: "uppercase",
               flexShrink: 0,
             }}>
@@ -338,13 +338,13 @@ function BlogPost({ post, index }: { post: Post; index: number }) {
           </div>
 
           {/* Title */}
-          <h3 style={{ fontSize: "16px", fontWeight: 600, color: "var(--text)", lineHeight: 1.45, margin: 0 }}>
+          <h3 style={{ fontSize: "16px", fontWeight: 600, color: "var(--text)", lineHeight: 1.3, margin: 0 }}>
             {post.title}
           </h3>
 
           {/* Excerpt */}
           {!open && (
-            <p style={{ fontSize: "13px", color: "var(--text-muted)", lineHeight: 1.7, margin: 0 }}>
+            <p style={{ fontSize: "12px", color: "var(--text-muted)", lineHeight: 1.7, margin: 0 }}>
               {post.excerpt}
             </p>
           )}
@@ -362,7 +362,7 @@ function BlogPost({ post, index }: { post: Post; index: number }) {
             >
               <div style={{ padding: "20px 22px 28px", borderTop: "1px solid var(--border)", display: "flex", flexDirection: "column", gap: "16px" }}>
                 {post.paragraphs.map((p, i) => (
-                  <p key={i} style={{ fontSize: "14px", color: "var(--text-muted)", lineHeight: 1.85, margin: 0 }}>
+                  <p key={i} style={{ fontSize: "14px", color: "var(--text-muted)", lineHeight: 1.7, margin: 0 }}>
                     {p}
                   </p>
                 ))}
@@ -400,7 +400,7 @@ export default function LifeMd({ isActive }: SectionProps) {
             <h2 style={{ fontSize: "28px", fontWeight: 600, color: "var(--text)", marginBottom: "10px", letterSpacing: "-0.02em" }}>
               life outside the desk
             </h2>
-            <p style={{ fontSize: "14px", color: "var(--text-muted)", lineHeight: 1.8, marginBottom: "40px" }}>
+            <p style={{ fontSize: "14px", color: "var(--text-muted)", lineHeight: 1.7, marginBottom: "40px" }}>
               what&apos;s actually going on. follow along →{" "}
               <a href="https://instagram.com/paytoncwallace" target="_blank" rel="noopener noreferrer"
                 style={{ color: "var(--text)", textDecoration: "underline", textUnderlineOffset: "3px" }}>

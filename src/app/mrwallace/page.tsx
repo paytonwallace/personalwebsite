@@ -102,9 +102,6 @@ export default function MrWallacePage() {
         }}
       >
         <div style={{ maxWidth: "720px", margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: "20px" }}>
-            <img src="/mr-wallace-logo.png" alt="Mr. Wallace" style={{ maxWidth: "200px", height: "auto" }} />
-          </div>
           <h1
             style={{
               fontFamily: "var(--font-geist-mono)",

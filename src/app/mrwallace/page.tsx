@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -10,7 +10,7 @@ interface PostMeta {
   title: string;
   category: string;
   date: string;
-  excerpt: string;
+  excerpt?: string; description?: string;
   readTime: string;
 }
 
@@ -280,7 +280,7 @@ export default function MrWallacePage() {
                         marginBottom: "8px",
                       }}
                     >
-                      {post.excerpt}
+                      {post.excerpt || post.description}
                     </p>
 
                     {/* Likes & Comments */}

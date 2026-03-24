@@ -246,10 +246,130 @@ export default function MemoryBiblePage() {
           </tbody>
         </table>
       </div>
+
+      <hr style={{ border: "none", borderTop: "1px solid #222", marginBottom: 48 }} />
+
+      <h2 style={{ fontSize: 18, fontWeight: 600, color: "#fff", marginBottom: 24 }}>section 4: the trading-optimized architecture</h2>
+      <p style={{ marginBottom: 24 }}>
+        the Memory Bible's architecture isn't wrong -- it's just solving for the wrong clock speed. here's what happens when you take its best principles and rebuild the parts that don't survive the translation.
+      </p>
+      <p style={{ marginBottom: 32 }}>
+        the key insight: you don't replace the Memory Bible. you run it underneath a trading layer that operates on a completely different timescale.
+      </p>
+
+      <div style={{ background: "#111", border: "1px solid #222", borderRadius: 8, padding: 24, marginBottom: 40, overflowX: "auto" }}>
+        <p style={{ color: "#888", fontSize: 11, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 16 }}>side by side: Memory Bible V7 vs. trading-optimized</p>
+        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+          <thead>
+            <tr style={{ borderBottom: "1px solid #333" }}>
+              <th style={{ textAlign: "left", padding: "8px 12px 8px 0", color: "#fff", fontWeight: 600 }}>layer</th>
+              <th style={{ textAlign: "left", padding: "8px 12px", color: "#34C759", fontWeight: 600 }}>memory bible V7</th>
+              <th style={{ textAlign: "left", padding: "8px 0 8px 12px", color: "#0A84FF", fontWeight: 600 }}>trading-optimized</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ["capture", "Observer watches files + git", "Event Listener watches on-chain transactions"],
+              ["truth store", "SQLite canonical store, human-approved", "Wallet Registry -- performance-scored, auto-updated"],
+              ["decision speed", "compiler runs after sessions end", "Scorer runs in milliseconds, continuously"],
+              ["automation", "shadow-first, earn slowly", "act first, learn continuously"],
+              ["memory purpose", "session continuity", "pattern recognition + alpha detection"],
+              ["learning loop", "nightly consolidation", "real-time confidence score updates"],
+              ["human role", "approves canonical truth", "sets rules, reviews edge cases"],
+            ].map(([l, m, t], idx) => (
+              <tr key={idx} style={{ borderBottom: "1px solid #1a1a1a" }}>
+                <td style={{ padding: "10px 12px 10px 0", color: "#e5e5e5", fontWeight: 500 }}>{l}</td>
+                <td style={{ padding: "10px 12px", color: "#999" }}>{m}</td>
+                <td style={{ padding: "10px 0 10px 12px", color: "#999" }}>{t}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <p style={{ marginBottom: 8 }}><strong style={{ color: "#fff" }}>the two-lane model</strong></p>
+      <p style={{ marginBottom: 16 }}>
+        the biggest architectural shift is accepting that two different speeds need to coexist without blocking each other.
+      </p>
+      <p style={{ marginBottom: 16 }}>
+        <strong style={{ color: "#0A84FF" }}>fast lane</strong> -- runs continuously, processes on-chain events as they happen, scores wallets against the confidence model, and fires decisions in near real-time. it doesn't wait for human approval. it acts within the rules it's been given.
+      </p>
+      <p style={{ marginBottom: 32 }}>
+        <strong style={{ color: "#34C759" }}>slow lane</strong> -- this is the Memory Bible. runs on a schedule, reviews what the fast lane did, updates the wallet registry with new performance data, flags wallets whose behavior has changed, refines the scoring model. this is where learning happens.
+      </p>
+      <p style={{ marginBottom: 32 }}>
+        neither lane knows about the other's internal state. they communicate through the wallet registry -- a shared table the fast lane reads and the slow lane writes.
+      </p>
+
+      <div style={{ background: "#111", border: "1px solid #222", borderRadius: 8, padding: 24, marginBottom: 40 }}>
+        <p style={{ color: "#888", fontSize: 11, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 16 }}>data flow: from blockchain event to decision</p>
+        <div style={{ fontFamily: "monospace", fontSize: 13, color: "#999", lineHeight: 2.2 }}>
+          {[
+            { label: "on-chain event", color: "#555" },
+            { label: "Event Listener", sub: "captures wallet + transaction data", color: "#0A84FF" },
+            { label: "Wallet Scorer", sub: "queries registry, applies confidence model", color: "#0A84FF" },
+            { label: "Decision Engine", sub: "copy / pass / flag for review", color: "#FFD60A" },
+            { label: "Action", sub: "execute trade or log pass", color: "#34C759" },
+            { label: "Outcome Logger", sub: "feeds back into slow lane", color: "#34C759" },
+            { label: "Wallet Registry", sub: "confidence scores updated nightly", color: "#34C759" },
+          ].map((item, idx) => (
+            <div key={idx} style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 4 }}>
+              <span style={{ color: "#333", width: 16, flexShrink: 0, marginTop: 2 }}>{idx === 0 ? "" : "↓"}</span>
+              <div>
+                <span style={{ color: item.color, fontWeight: 600 }}>{item.label}</span>
+                {item.sub && <span style={{ color: "#555", marginLeft: 8 }}>-- {item.sub}</span>}
+              </div>
+            </div>
+          ))}
+          <div style={{ display: "flex", gap: 12 }}>
+            <span style={{ color: "#333", width: 16 }}>↓</span>
+            <span style={{ color: "#333", fontStyle: "italic" }}>(loop)</span>
+          </div>
+        </div>
+      </div>
+
+      <div style={{ background: "#111", border: "1px solid #222", borderRadius: 8, padding: 24, marginBottom: 40, overflowX: "auto" }}>
+        <p style={{ color: "#888", fontSize: 11, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 16 }}>wallet registry structure</p>
+        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+          <thead>
+            <tr style={{ borderBottom: "1px solid #333" }}>
+              <th style={{ textAlign: "left", padding: "8px 12px 8px 0", color: "#fff", fontWeight: 600 }}>field</th>
+              <th style={{ textAlign: "left", padding: "8px 12px", color: "#fff", fontWeight: 600 }}>purpose</th>
+              <th style={{ textAlign: "left", padding: "8px 0 8px 12px", color: "#fff", fontWeight: 600 }}>example</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ["wallet_id", "on-chain address", "0x7f3a..."],
+              ["category", "alpha / neutral / dumb / bot / trap", "alpha"],
+              ["confidence_score", "0-100, updated by slow lane", "87"],
+              ["win_rate_30d", "recent accuracy", "73%"],
+              ["last_signal", "most recent trade pattern", "early entry, SOL/USDC"],
+              ["last_updated", "when slow lane refreshed this", "2026-03-23 02:00"],
+              ["copy_threshold", "min confidence to auto-copy", "80"],
+              ["notes", "human or system flags", "consistent early entry, 3 losing streaks last Q"],
+            ].map(([f, p, e], idx) => (
+              <tr key={idx} style={{ borderBottom: "1px solid #1a1a1a" }}>
+                <td style={{ padding: "10px 12px 10px 0", color: "#e5e5e5", fontFamily: "monospace", fontSize: 12 }}>{f}</td>
+                <td style={{ padding: "10px 12px", color: "#999" }}>{p}</td>
+                <td style={{ padding: "10px 0 10px 12px", color: "#666", fontSize: 12 }}>{e}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <p style={{ marginBottom: 8 }}><strong style={{ color: "#fff" }}>where the Memory Bible lives in this system</strong></p>
+      <p style={{ marginBottom: 16 }}>
+        the slow lane IS the Memory Bible. everything they built -- the compiler, the canonical store, the contradiction queue, the authority registry -- that's the learning infrastructure. it runs on a schedule, not in the critical path.
+      </p>
+      <p style={{ marginBottom: 48 }}>
+        the fast lane is what the Memory Bible's authors were always describing as "reactive" and consciously chose not to build. they were right not to build it for a personal assistant. for trading, it's the whole point. the two systems together are more powerful than either alone. the fast lane acts. the slow lane learns. the wallet registry is the shared memory between them.
+      </p>
       <hr style={{ border: "none", borderTop: "1px solid #222", marginBottom: 48 }} />
 
       <p style={{ color: "#444", fontSize: 13, textAlign: "center" }}>
-        sections 4-7 in progress &mdash; check back soon
+        sections 5-7 in progress &mdash; check back soon
       </p>
 
       <div style={{ marginTop: 64, paddingTop: 32, borderTop: "1px solid #1a1a1a" }}>

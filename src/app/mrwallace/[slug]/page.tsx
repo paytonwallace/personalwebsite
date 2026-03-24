@@ -1,10 +1,10 @@
 import { notFound } from "next/navigation";
 import Script from "next/script";
-import { getAllPosts, getPostBySlug } from "@/lib/blog";
+import { getAllPosts, getAllPostsIncludingUnpublished, getPostBySlug } from "@/lib/blog";
 import ArticleClient from "./ArticleClient";
 
 export function generateStaticParams() {
-  const posts = getAllPosts();
+  const posts = getAllPostsIncludingUnpublished();
   return posts.map((p) => ({ slug: p.slug }));
 }
 

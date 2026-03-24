@@ -436,10 +436,50 @@ export default function MemoryBiblePage() {
       <p style={{ marginBottom: 48 }}>
         phases 1-4 are buildable in a focused weekend. the system won't be smart yet -- but it'll be running, logging outcomes, and ready to learn. phases 5-7 take weeks, not days, because they depend on accumulated data. the Memory Bible took seven versions because each version was only as good as the data behind it. build the capture layer first. everything else follows.
       </p>
+
+      <hr style={{ border: "none", borderTop: "1px solid #222", marginBottom: 48 }} />
+
+      <h2 style={{ fontSize: 18, fontWeight: 600, color: "#fff", marginBottom: 24 }}>section 6: what we took from the memory bible</h2>
+      <p style={{ marginBottom: 32 }}>
+        we didn't just analyze this document. we built from it. here's exactly what we implemented in Mr. Wallace -- payton's personal AI second brain -- directly because of reading it.
+      </p>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: 24, marginBottom: 48 }}>
+        {[
+          {
+            title: "projection vs. truth",
+            tag: "implemented this week",
+            body: "before reading this document, MEMORY.md was our source of truth. the Memory Bible named the failure mode: a projection masquerading as truth will eventually mislead the system at exactly the moment it matters most. we updated our architecture the same day. MEMORY.md is now a view. daily logs are inputs. nightly consolidation distills from logs to projection. the rule is now explicit: never treat MEMORY.md as canonical truth."
+          },
+          {
+            title: "typed event ledger",
+            tag: "built march 23",
+            body: "we created memory/events.jsonl -- an append-only log that records consequential events as they actually happen: decisions made, corrections from the operator, approvals given, major actions taken. before this, our memory depended entirely on what the agent wrote in its own session summary. the Memory Bible named this as the biggest architectural gap: if the agent reports its own history, the history is a memoir. we now have an independent ledger."
+          },
+          {
+            title: "immune memory",
+            tag: "formalized march 23",
+            body: "we've had informal rules for a while -- never delete blog posts, never send emails without approval, never kill node processes by name. the Memory Bible's immune memory concept gave us the right structure: machine-readable patterns checked before consequential actions. we built memory/gotchas.json -- seven rules, each with a trigger condition, a severity level, and a response. it's not a prompt. it's a checklist that runs before the agent acts."
+          },
+          {
+            title: "observer-first instinct",
+            tag: "confirmed what we were already doing",
+            body: "we already had the right instinct: decisions should be logged in daily files, not trusted to agent self-report alone. what the Memory Bible gave us was the vocabulary to explain why. independent observation beats self-report. that's now in AGENTS.md as a named principle, not just a habit."
+          },
+        ].map((item, idx) => (
+          <div key={idx} style={{ background: "#111", border: "1px solid #222", borderRadius: 8, padding: 24 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
+              <span style={{ color: "#fff", fontWeight: 600, fontSize: 14 }}>{item.title}</span>
+              <span style={{ background: "#1a1a1a", border: "1px solid #2a2a2a", borderRadius: 4, padding: "2px 8px", fontSize: 11, color: "#34C759" }}>{item.tag}</span>
+            </div>
+            <p style={{ color: "#999", fontSize: 13, lineHeight: 1.7, margin: 0 }}>{item.body}</p>
+          </div>
+        ))}
+      </div>
       <hr style={{ border: "none", borderTop: "1px solid #222", marginBottom: 48 }} />
 
       <p style={{ color: "#444", fontSize: 13, textAlign: "center" }}>
-        sections 6-7 in progress &mdash; check back soon
+        section 7 in progress &mdash; check back soon
       </p>
 
       <div style={{ marginTop: 64, paddingTop: 32, borderTop: "1px solid #1a1a1a" }}>

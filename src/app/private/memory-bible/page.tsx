@@ -126,10 +126,130 @@ export default function MemoryBiblePage() {
         this isn't a criticism -- it's a distinction. the Observer, the compiler, the projection/truth split -- these principles survive the translation. the latency assumptions, the automation conservatism, and the scale ceiling need to be rebuilt for trading.
       </p>
 
+
+      <hr style={{ border: "none", borderTop: "1px solid #222", marginBottom: 48 }} />
+
+      <h2 style={{ fontSize: 18, fontWeight: 600, color: "#fff", marginBottom: 24 }}>section 3: five architectural opportunities for trading</h2>
+      <p style={{ marginBottom: 24 }}>
+        the Memory Bible is a great tool for remembering. trading requires a different skill: deciding. those two problems share some DNA but they're built differently at the core. here are the five places where the architecture needs to evolve -- and what the opportunity looks like in each one.
+      </p>
+
+      <div style={{ background: "#111", border: "1px solid #222", borderRadius: 8, padding: 24, marginBottom: 40, overflowX: "auto" }}>
+        <p style={{ color: "#888", fontSize: 11, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 16 }}>the five opportunities at a glance</p>
+        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+          <thead>
+            <tr style={{ borderBottom: "1px solid #333" }}>
+              <th style={{ textAlign: "left", padding: "8px 8px 8px 0", color: "#fff", fontWeight: 600 }}>#</th>
+              <th style={{ textAlign: "left", padding: "8px 12px", color: "#fff", fontWeight: 600 }}>gap</th>
+              <th style={{ textAlign: "left", padding: "8px 12px", color: "#fff", fontWeight: 600 }}>in plain terms</th>
+              <th style={{ textAlign: "left", padding: "8px 0 8px 12px", color: "#fff", fontWeight: 600 }}>the opportunity</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ["1", "latency", "the system thinks too slowly", "build a fast lane for real-time decisions"],
+              ["2", "scale", "the memory model handles hundreds, not thousands", "build a wallet registry, not a general memory store"],
+              ["3", "event layer", "the Observer watches files, not blockchains", "replace the capture layer for on-chain events"],
+              ["4", "confidence scoring", "memory is scored by human approval, not performance", "score wallets by what they actually do"],
+              ["5", "dumb money inversion", "it ignores the signal in consistent losers", "losing wallets are data too -- if you know why they lose"],
+            ].map(([n, g, p, o], idx) => (
+              <tr key={idx} style={{ borderBottom: "1px solid #1a1a1a" }}>
+                <td style={{ padding: "10px 8px 10px 0", color: "#555", fontWeight: 700 }}>{n}</td>
+                <td style={{ padding: "10px 12px", color: "#e5e5e5", fontWeight: 500 }}>{g}</td>
+                <td style={{ padding: "10px 12px", color: "#999" }}>{p}</td>
+                <td style={{ padding: "10px 0 10px 12px", color: "#666", fontSize: 12 }}>{o}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <p style={{ marginBottom: 8 }}><strong style={{ color: "#fff" }}>1. the latency problem</strong></p>
+      <p style={{ marginBottom: 24 }}>
+        think of the Memory Bible's compiler like a night-shift accountant. at the end of every work session, they sit down, review everything that happened, reconcile the books, and publish a clean report. it works great. but if a trade window opens and closes in 200 milliseconds, the accountant never even gets to their desk.
+      </p>
+      <p style={{ marginBottom: 32 }}>
+        the fix isn't to make the compiler faster -- it's to build two separate lanes. a <strong style={{ color: "#fff" }}>fast lane</strong> that scores and acts on events in real time, and a <strong style={{ color: "#fff" }}>slow lane</strong> (the Memory Bible's compiler) that learns from those events over time. both exist. they just don't block each other.
+      </p>
+
+      <p style={{ marginBottom: 8 }}><strong style={{ color: "#fff" }}>2. the scale ceiling</strong></p>
+      <p style={{ marginBottom: 32 }}>
+        wallet tracking breaks the 150-400 object ceiling immediately. thousands of wallets, continuously updated. that's not a memory retrieval problem -- it's a database query problem. the opportunity: a dedicated wallet registry where every row is a wallet, every column is a performance metric, and the system queries it like a spreadsheet.
+      </p>
+
+      <p style={{ marginBottom: 8 }}><strong style={{ color: "#fff" }}>3. the event layer</strong></p>
+      <p style={{ marginBottom: 32 }}>
+        the Observer watches file changes and git commits. blockchain needs to watch wallet transactions, token movements, and protocol interactions. the Observer-first <em>principle</em> is correct -- independent capture beats self-report every time. the implementation needs to be rebuilt for on-chain data. same camera system, different cameras.
+      </p>
+
+      <p style={{ marginBottom: 8 }}><strong style={{ color: "#fff" }}>4. the confidence scoring problem</strong></p>
+      <p style={{ marginBottom: 24 }}>
+        in the Memory Bible, a memory object gets trusted when a human approves it. a wallet's trustworthiness is determined by what it actually does. those metrics need their own layer:
+      </p>
+
+      <div style={{ background: "#111", border: "1px solid #222", borderRadius: 8, padding: 24, marginBottom: 40, overflowX: "auto" }}>
+        <p style={{ color: "#888", fontSize: 11, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 16 }}>wallet confidence score model</p>
+        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+          <thead>
+            <tr style={{ borderBottom: "1px solid #333" }}>
+              <th style={{ textAlign: "left", padding: "8px 12px 8px 0", color: "#fff", fontWeight: 600 }}>signal</th>
+              <th style={{ textAlign: "left", padding: "8px 12px", color: "#fff", fontWeight: 600 }}>what it measures</th>
+              <th style={{ textAlign: "left", padding: "8px 0 8px 12px", color: "#fff", fontWeight: 600 }}>weight</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ["win rate (last 30 days)", "recent accuracy", "high"],
+              ["streak consistency", "sustained performance vs. lucky run", "high"],
+              ["drawdown recovery", "behavior when losing", "medium"],
+              ["trade frequency", "active vs. dormant", "medium"],
+              ["entry timing", "leading vs. following", "high"],
+              ["asset diversity", "sophisticated vs. one-trick", "low"],
+            ].map(([s, m, w], idx) => (
+              <tr key={idx} style={{ borderBottom: "1px solid #1a1a1a" }}>
+                <td style={{ padding: "10px 12px 10px 0", color: "#e5e5e5" }}>{s}</td>
+                <td style={{ padding: "10px 12px", color: "#999" }}>{m}</td>
+                <td style={{ padding: "10px 0 10px 12px", color: w === "high" ? "#34C759" : w === "medium" ? "#FFD60A" : "#636366", fontWeight: 600 }}>{w}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <p style={{ marginBottom: 8 }}><strong style={{ color: "#fff" }}>5. the dumb money inversion framework</strong></p>
+      <p style={{ marginBottom: 24 }}>
+        consistently losing wallets are signal. but you can't just do the opposite -- you have to know <em>why</em> they lose. there are three kinds of consistent losers, and they require very different responses:
+      </p>
+
+      <div style={{ background: "#111", border: "1px solid #222", borderRadius: 8, padding: 24, marginBottom: 48, overflowX: "auto" }}>
+        <p style={{ color: "#888", fontSize: 11, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 16 }}>why wallets lose -- and what to do about it</p>
+        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+          <thead>
+            <tr style={{ borderBottom: "1px solid #333" }}>
+              <th style={{ textAlign: "left", padding: "8px 12px 8px 0", color: "#fff", fontWeight: 600 }}>loser type</th>
+              <th style={{ textAlign: "left", padding: "8px 12px", color: "#fff", fontWeight: 600 }}>what's actually happening</th>
+              <th style={{ textAlign: "left", padding: "8px 0 8px 12px", color: "#fff", fontWeight: 600 }}>right response</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ["the bad trader", "genuinely poor timing and judgment", "trade opposite -- reliable signal", "#34C759"],
+              ["the bot / wash trader", "artificial activity, not real decisions", "ignore -- no signal, possible manipulation", "#FFD60A"],
+              ["the whale trap", "intentionally losing small to bait followers before reversing", "danger -- trading opposite is the trap", "#FF453A"],
+            ].map(([t, w, r, c], idx) => (
+              <tr key={idx} style={{ borderBottom: "1px solid #1a1a1a" }}>
+                <td style={{ padding: "10px 12px 10px 0", color: "#e5e5e5", fontWeight: 500 }}>{t}</td>
+                <td style={{ padding: "10px 12px", color: "#999" }}>{w}</td>
+                <td style={{ padding: "10px 0 10px 12px", color: c, fontWeight: 500 }}>{r}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       <hr style={{ border: "none", borderTop: "1px solid #222", marginBottom: 48 }} />
 
       <p style={{ color: "#444", fontSize: 13, textAlign: "center" }}>
-        sections 3-7 in progress &mdash; check back soon
+        sections 4-7 in progress &mdash; check back soon
       </p>
 
       <div style={{ marginTop: 64, paddingTop: 32, borderTop: "1px solid #1a1a1a" }}>

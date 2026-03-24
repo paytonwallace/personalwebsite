@@ -55,7 +55,39 @@ this is underrated. forcing yourself to build on SQLite, markdown, and local scr
 
 ---
 
-*[section 2 coming -- the hidden assumption]*
+## section 2: the hidden assumption
+
+the Memory Bible makes one assumption so early and so naturally that it never gets named. once you name it, every architectural choice in the document makes sense -- and every place it breaks for trading becomes obvious.
+
+the assumption is this: **the operator has time to think.**
+
+every design choice in the document assumes a human in a deliberate workflow. you finish a session, the compiler runs, truth gets published, the boot file gets updated, and tomorrow you pick back up with context intact. the loop is measured in hours and days. the value is session continuity -- not forgetting what you built last week.
+
+that's the right architecture for a personal assistant, a coding agent, a second brain. it is the wrong architecture for a system that needs to make decisions in milliseconds based on on-chain data.
+
+---
+
+> **the two modes of AI decision-making**
+>
+> | dimension | reflective (Memory Bible) | reactive (trading) |
+> |---|---|---|
+> | decision window | hours to days | milliseconds to seconds |
+> | truth source | human-approved canonical store | on-chain immutable data |
+> | correction model | human reviews, compiler updates | wrong = lost money |
+> | automation posture | shadow-first, earn autonomy slowly | speed IS the edge |
+> | memory purpose | don't forget what was built | detect pattern, act, learn |
+> | scale | 150-400 active memory objects | thousands of wallets continuously |
+> | failure mode | stale context in next session | missed alpha window |
+
+---
+
+this isn't a criticism. it's a distinction. the Memory Bible is solving the right problem for the use case it was designed for. the opportunity is recognizing that trading requires a different layer running underneath the same principles.
+
+the Observer, the compiler, the projection/truth split -- these ideas survive the translation. the latency assumptions, the automation conservatism, and the scale ceiling do not.
+
+the right question isn't "how do we apply the Memory Bible to trading?" it's "which principles generalize, which ones need to be rebuilt, and what does a trading-native architecture look like?"
+
+that's what the next sections answer.
 
 *[section 3 coming -- five architectural gaps for trading]*
 

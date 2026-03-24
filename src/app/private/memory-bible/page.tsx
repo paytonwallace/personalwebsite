@@ -366,10 +366,80 @@ export default function MemoryBiblePage() {
       <p style={{ marginBottom: 48 }}>
         the fast lane is what the Memory Bible's authors were always describing as "reactive" and consciously chose not to build. they were right not to build it for a personal assistant. for trading, it's the whole point. the two systems together are more powerful than either alone. the fast lane acts. the slow lane learns. the wallet registry is the shared memory between them.
       </p>
+
+      <hr style={{ border: "none", borderTop: "1px solid #222", marginBottom: 48 }} />
+
+      <h2 style={{ fontSize: 18, fontWeight: 600, color: "#fff", marginBottom: 24 }}>section 5: tactical implementation path</h2>
+      <p style={{ marginBottom: 32 }}>
+        knowing the architecture is one thing. knowing what to build first is another. here's the honest sequence -- what to prioritize, what to defer, and what to leave out entirely.
+      </p>
+
+      <div style={{ background: "#111", border: "1px solid #222", borderRadius: 8, padding: 24, marginBottom: 40, overflowX: "auto" }}>
+        <p style={{ color: "#888", fontSize: 11, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 16 }}>build order</p>
+        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+          <thead>
+            <tr style={{ borderBottom: "1px solid #333" }}>
+              <th style={{ textAlign: "left", padding: "8px 8px 8px 0", color: "#fff", fontWeight: 600 }}>phase</th>
+              <th style={{ textAlign: "left", padding: "8px 12px", color: "#fff", fontWeight: 600 }}>what to build</th>
+              <th style={{ textAlign: "left", padding: "8px 0 8px 12px", color: "#fff", fontWeight: 600 }}>why first</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ["1", "wallet registry (SQLite)", "everything reads from this -- build it empty and right"],
+              ["2", "event listener", "raw capture before anything else -- same lesson as the Memory Bible"],
+              ["3", "wallet scorer", "start simple: win rate + recency only. add signals as data accumulates"],
+              ["4", "decision engine (copy / pass)", "rules-based first, no ML -- fast to build, easy to audit"],
+              ["5", "outcome logger", "close the loop -- without this you can't improve"],
+              ["6", "slow lane consolidator", "nightly job that updates the registry from outcome data"],
+              ["7", "dumb money classifier", "only after you have enough outcome data to train the patterns"],
+            ].map(([n, w, r], idx) => (
+              <tr key={idx} style={{ borderBottom: "1px solid #1a1a1a" }}>
+                <td style={{ padding: "10px 8px 10px 0", color: "#555", fontWeight: 700, fontFamily: "monospace" }}>{n}</td>
+                <td style={{ padding: "10px 12px", color: "#e5e5e5", fontWeight: 500 }}>{w}</td>
+                <td style={{ padding: "10px 0 10px 12px", color: "#666", fontSize: 12 }}>{r}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <p style={{ marginBottom: 8 }}><strong style={{ color: "#fff" }}>what to build in phase 1 that most people skip</strong></p>
+      <p style={{ marginBottom: 32 }}>
+        the wallet registry needs to exist before any other code runs. not because you'll have data -- you won't. but because every other component is designed around its schema. if you build the event listener first and the scorer second, you'll redesign the registry three times to fit what each component needs. start with the schema.
+      </p>
+
+      <div style={{ background: "#111", border: "1px solid #222", borderRadius: 8, padding: 24, marginBottom: 40 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 24 }}>
+          <div>
+            <p style={{ color: "#FFD60A", fontSize: 11, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 12, fontWeight: 600 }}>defer</p>
+            {["machine learning (until 90+ days of data)", "cross-chain tracking", "dumb money classifier", "any UI"].map((item, i) => (
+              <p key={i} style={{ color: "#666", fontSize: 13, marginBottom: 8 }}>-- {item}</p>
+            ))}
+          </div>
+          <div>
+            <p style={{ color: "#FF453A", fontSize: 11, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 12, fontWeight: 600 }}>throw out</p>
+            {["human approval in the fast lane", "general-purpose memory in the fast lane", "complex confidence formulas before data"].map((item, i) => (
+              <p key={i} style={{ color: "#666", fontSize: 13, marginBottom: 8 }}>-- {item}</p>
+            ))}
+          </div>
+          <div>
+            <p style={{ color: "#34C759", fontSize: 11, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 12, fontWeight: 600 }}>build now</p>
+            {["wallet registry schema", "event listener", "simple scorer (win rate + recency)", "rules-based decision engine"].map((item, i) => (
+              <p key={i} style={{ color: "#666", fontSize: 13, marginBottom: 8 }}>-- {item}</p>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <p style={{ marginBottom: 16 }}><strong style={{ color: "#fff" }}>the honest timeline</strong></p>
+      <p style={{ marginBottom: 48 }}>
+        phases 1-4 are buildable in a focused weekend. the system won't be smart yet -- but it'll be running, logging outcomes, and ready to learn. phases 5-7 take weeks, not days, because they depend on accumulated data. the Memory Bible took seven versions because each version was only as good as the data behind it. build the capture layer first. everything else follows.
+      </p>
       <hr style={{ border: "none", borderTop: "1px solid #222", marginBottom: 48 }} />
 
       <p style={{ color: "#444", fontSize: 13, textAlign: "center" }}>
-        sections 5-7 in progress &mdash; check back soon
+        sections 6-7 in progress &mdash; check back soon
       </p>
 
       <div style={{ marginTop: 64, paddingTop: 32, borderTop: "1px solid #1a1a1a" }}>

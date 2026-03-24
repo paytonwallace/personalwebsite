@@ -22,7 +22,7 @@ export default function MemoryBiblePage() {
       </p>
 
       <p style={{ marginBottom: 32 }}>
-        a friend shared a 34-page architecture document with us tonight called the Memory Bible V7. it's the most rigorous public thinking on local-first AI context management i've seen. seven versions, each correcting real failures from the last. the kind of document you write when you've actually built something and watched it break.
+        a friend shared a 34-page architecture document tonight called the Memory Bible V7 -- the seventh version of a local-first context operating system called HIPPO + ORACLE. it's the most rigorous public thinking on local-first AI context management i've seen. seven versions -- V1 through V7 -- each correcting real failures from the last. the kind of document you write when you've actually built something and watched it break.
       </p>
       <p style={{ marginBottom: 48 }}>
         we spent time with it. this is our response &mdash; what they got right, where we see opportunity, and a roadmap for taking it further.
@@ -32,7 +32,7 @@ export default function MemoryBiblePage() {
 
       <h2 style={{ fontSize: 18, fontWeight: 600, color: "#fff", marginBottom: 24 }}>section 1: what you got right</h2>
       <p style={{ marginBottom: 24 }}>
-        before anything else: the Memory Bible represents some of the most rigorous thinking on local-first AI context management that exists publicly. most people build once and ship. you audited your own architecture five times before publishing.
+        before anything else: the Memory Bible represents some of the most rigorous thinking on local-first AI context management that exists publicly. most people build once and ship. you built seven versions before publishing -- each one a genuine audit of the last, not a cosmetic refresh.
       </p>
 
       <div style={{ background: "#111", border: "1px solid #222", borderRadius: 8, padding: 24, marginBottom: 32, overflowX: "auto" }}>
@@ -70,7 +70,7 @@ export default function MemoryBiblePage() {
         two summaries that say slightly different things about the same event produce ambiguity that compounds. a single-writer compiler that owns the publish path is the right answer -- same principle as a database write-ahead log.
       </p>
       <p style={{ marginBottom: 16 }}><strong style={{ color: "#fff" }}>projection vs. truth</strong><br />
-        MEMORY.md is not truth -- it's a view. when the view is stale, you refresh the projection. you don't distrust the system. we implemented this distinction in Mr. Wallace this week, directly because of reading this document.
+        MEMORY.md is not truth -- it's a view. when the view is stale, you refresh the projection. you don't distrust the system. this is one of the most transferable insights in the document regardless of what you're building.
       </p>
       <p style={{ marginBottom: 16 }}><strong style={{ color: "#fff" }}>VULCAN tandem boundary</strong><br />
         the brief as a human bridge is the right design -- it preserves human judgment at exactly the point where automation transitions to real action.
@@ -122,8 +122,17 @@ export default function MemoryBiblePage() {
         </table>
       </div>
 
-      <p style={{ marginBottom: 48 }}>
+      <p style={{ marginBottom: 24 }}>
         this isn't a criticism -- it's a distinction. the Observer, the compiler, the projection/truth split -- these principles survive the translation. the latency assumptions, the automation conservatism, and the scale ceiling need to be rebuilt for trading.
+      </p>
+      <p style={{ marginBottom: 16 }}>
+        one more thing worth naming before we go further: the document's deepest reframe is that HIPPO + ORACLE isn't a "memory system" at all. it's a local-first context operating system running five continuous loops: capture, truth, context, governance, and adaptation. memory lives inside all five, but none of the loops alone is sufficient.
+      </p>
+      <p style={{ marginBottom: 16 }}>
+        the north star is also not what most people assume. the document says it explicitly: the goal is not literal 100% memory. it's 100% sourceability, 100% escalation on uncertainty, 100% blocked-or-reversible dangerous actions, and the highest possible bounded-domain session continuity under real constraints. that reframe matters. a system optimizing for "remember everything" and a system optimizing for "know what you know, escalate what you don't, and never act dangerously on stale truth" look very different.
+      </p>
+      <p style={{ marginBottom: 48 }}>
+        the trading architecture we're building is optimizing for a third thing: decide correctly, fast, and keep learning. that's downstream of the same five loops -- just running at a different clock speed.
       </p>
 
 
@@ -131,7 +140,10 @@ export default function MemoryBiblePage() {
 
       <h2 style={{ fontSize: 18, fontWeight: 600, color: "#fff", marginBottom: 24 }}>section 3: five architectural opportunities for trading</h2>
       <p style={{ marginBottom: 24 }}>
-        the Memory Bible is a great tool for remembering. trading requires a different skill: deciding. those two problems share some DNA but they're built differently at the core. here are the five places where the architecture needs to evolve -- and what the opportunity looks like in each one.
+        HIPPO + ORACLE is a great system for remembering and governing. trading requires a different skill: deciding fast. those two problems share some DNA but they're built differently at the core. here are the five places where the architecture needs to evolve -- and what the opportunity looks like in each one.
+      </p>
+      <p style={{ marginBottom: 24 }}>
+        one gap we're deliberately not addressing in the trading architecture: governance. the Memory Bible devotes significant architecture to manifests, authority registries, contradiction queues, eval bundles, and permission gates. that layer is what separates a memory system from a trustworthy context operating system. for trading, the equivalent isn't missing -- it's just different. the manifest is your wallet registry. the permission gate is your copy threshold. the contradiction queue is your false positive tracker. the principles transfer, even when the implementation looks nothing alike.
       </p>
 
       <div style={{ background: "#111", border: "1px solid #222", borderRadius: 8, padding: 24, marginBottom: 40, overflowX: "auto" }}>

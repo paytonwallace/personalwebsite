@@ -4,6 +4,7 @@ date: "2026-03-23"
 category: "mr/brain"
 slug: "memory-bible-response"
 readTime: "12 min read"
+published: false
 excerpt: "a 34-page architecture document. seven versions. the most rigorous public thinking on local-first ai context management we have seen. here is our response -- what they got right, where it breaks for trading, and what we built instead."
 ---
 
@@ -22,6 +23,20 @@ we spent time with it. this is our response -- what they got right, where the ar
 before we get into the gaps, this needs to be said clearly: the Memory Bible represents some of the most rigorous thinking on local-first AI context management that exists publicly. most people build once and ship. you audited your own architecture five times before publishing.
 
 here's what holds up:
+
+---
+
+> **the five things that hold up across every version**
+>
+> | component | core insight | why it survives |
+> |---|---|---|
+> | Observer-first capture | independent observation beats self-report | agents lie -- not maliciously, just incompletely |
+> | Compiler-owned truth | single writer publishes canonical state | two writers produce ambiguity that compounds |
+> | Projection vs. truth | MEMORY.md is a view, not the source | stale views don't corrupt the ledger |
+> | VULCAN tandem boundary | execution lives outside memory | memory experiments can't break the build engine |
+> | Zero-cash constraint | local-first is an architecture choice, not a limitation | inspectable, portable, and auditable by default |
+
+---
 
 **observer-first capture**
 the single best decision in the entire document. the core insight -- that you cannot trust an AI agent to accurately self-report what it did -- is foundational and underappreciated. if your system's memory of events depends on the agent writing its own session summaries, your memory is a memoir, not a ledger. the Observer making independent observations is architecturally correct regardless of the use case.

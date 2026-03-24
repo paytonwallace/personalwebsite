@@ -10,6 +10,7 @@ export interface BlogPost {
   excerpt: string;
   readTime: string;
   content: string;
+  published?: boolean;
 }
 
 const BLOG_DIR = path.join(process.cwd(), "src/content/blog");
@@ -27,9 +28,12 @@ export function getAllPosts(): BlogPost[] {
       excerpt: data.excerpt as string,
       readTime: data.readTime as string,
       content,
+      published: data.published !== undefined ? data.published as boolean : true,
     };
   });
-  return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  return posts
+    .filter((p) => p.published !== false)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
 export function getPostBySlug(slug: string): BlogPost | undefined {

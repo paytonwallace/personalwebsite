@@ -551,14 +551,8 @@ export default function MemoryBiblePage() {
 
       <hr style={{ border: "none", borderTop: "1px solid #222", marginBottom: 48 }} />
 
-      <p style={{ marginBottom: 24, fontSize: 15, lineHeight: 1.8 }}>
-        the Memory Bible was built to solve a real problem, documented honestly, and revised seven times. that's the kind of work worth engaging with seriously -- and we hope this response did it justice.
-      </p>
-      <p style={{ marginBottom: 24, fontSize: 15, lineHeight: 1.8 }}>
-        if you're building in this space -- whether it's AI context management, on-chain intelligence, or something in between -- and you want to think through the architecture together, we're genuinely interested. not as a pitch. as builders who find these problems worth solving.
-      </p>
-      <p style={{ marginBottom: 48, fontSize: 15, lineHeight: 1.8 }}>
-        reach out. tell us what you're working on. we'd love to build together.
+      <p style={{ marginBottom: 48, fontSize: 15, lineHeight: 1.8, color: "#999" }}>
+        the Memory Bible was built to solve a real problem, documented honestly, and revised seven times. that's the kind of work worth engaging with seriously. thank you for sharing it.
       </p>
 
       <div style={{ marginTop: 64, paddingTop: 32, borderTop: "1px solid #1a1a1a" }}>

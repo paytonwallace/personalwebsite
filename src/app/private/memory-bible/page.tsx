@@ -439,47 +439,126 @@ export default function MemoryBiblePage() {
 
       <hr style={{ border: "none", borderTop: "1px solid #222", marginBottom: 48 }} />
 
-      <h2 style={{ fontSize: 18, fontWeight: 600, color: "#fff", marginBottom: 24 }}>section 6: what we took from the memory bible</h2>
+      <h2 style={{ fontSize: 18, fontWeight: 600, color: "#fff", marginBottom: 24 }}>section 6: what to take away</h2>
       <p style={{ marginBottom: 32 }}>
-        we didn't just analyze this document. we built from it. here's exactly what we implemented in Mr. Wallace -- payton's personal AI second brain -- directly because of reading it.
+        the Memory Bible is one of the most rigorous public documents on AI context management that exists. read it. the principles hold. but the architectural choices were made for a specific problem -- personal assistant continuity, measured in hours and days. if you're building for a different problem, know which parts to carry forward and which parts to rebuild.
       </p>
 
       <div style={{ display: "flex", flexDirection: "column", gap: 24, marginBottom: 48 }}>
         {[
           {
-            title: "projection vs. truth",
-            tag: "implemented this week",
-            body: "before reading this document, MEMORY.md was our source of truth. the Memory Bible named the failure mode: a projection masquerading as truth will eventually mislead the system at exactly the moment it matters most. we updated our architecture the same day. MEMORY.md is now a view. daily logs are inputs. nightly consolidation distills from logs to projection. the rule is now explicit: never treat MEMORY.md as canonical truth."
+            title: "observer-first capture is non-negotiable",
+            body: "if your memory depends on the agent reporting its own history, your memory is a memoir. independent observation is architecturally correct regardless of use case. this is the single most transferable principle in the entire document."
           },
           {
-            title: "typed event ledger",
-            tag: "built march 23",
-            body: "we created memory/events.jsonl -- an append-only log that records consequential events as they actually happen: decisions made, corrections from the operator, approvals given, major actions taken. before this, our memory depended entirely on what the agent wrote in its own session summary. the Memory Bible named this as the biggest architectural gap: if the agent reports its own history, the history is a memoir. we now have an independent ledger."
+            title: "projection vs. truth is a named failure mode",
+            body: "MEMORY.md is a view, not a source. any summary file, any derived state, any cached representation -- treat it as a projection. when it goes stale, you refresh the view. you don't distrust the system. the distinction matters most under pressure, when a stale projection is the most likely thing to mislead you."
           },
           {
-            title: "immune memory",
-            tag: "formalized march 23",
-            body: "we've had informal rules for a while -- never delete blog posts, never send emails without approval, never kill node processes by name. the Memory Bible's immune memory concept gave us the right structure: machine-readable patterns checked before consequential actions. we built memory/gotchas.json -- seven rules, each with a trigger condition, a severity level, and a response. it's not a prompt. it's a checklist that runs before the agent acts."
+            title: "single-writer discipline prevents silent corruption",
+            body: "two writers producing slightly different versions of the same truth produce ambiguity that compounds. pick one process that owns the write path and enforce it structurally. the Memory Bible learned this. the trading architecture relearns it with the wallet registry. it's the same lesson."
           },
           {
-            title: "observer-first instinct",
-            tag: "confirmed what we were already doing",
-            body: "we already had the right instinct: decisions should be logged in daily files, not trusted to agent self-report alone. what the Memory Bible gave us was the vocabulary to explain why. independent observation beats self-report. that's now in AGENTS.md as a named principle, not just a habit."
+            title: "the automation posture is a design choice, not a default",
+            body: "shadow-first, earn autonomy slowly is the right posture for a personal assistant where mistakes cost trust. it's the wrong posture for a system where speed is the edge. know what you're building. the Memory Bible's conservatism is a feature in its context. don't inherit it blindly in yours."
+          },
+          {
+            title: "build the capture layer before anything else",
+            body: "every version of the Memory Bible started with a broken capture layer and corrected it. the trading architecture leads with the event listener and the wallet registry for the same reason. you cannot learn from data you didn't capture. get the ledger right first. everything else follows."
           },
         ].map((item, idx) => (
           <div key={idx} style={{ background: "#111", border: "1px solid #222", borderRadius: 8, padding: 24 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
-              <span style={{ color: "#fff", fontWeight: 600, fontSize: 14 }}>{item.title}</span>
-              <span style={{ background: "#1a1a1a", border: "1px solid #2a2a2a", borderRadius: 4, padding: "2px 8px", fontSize: 11, color: "#34C759" }}>{item.tag}</span>
-            </div>
+            <p style={{ color: "#fff", fontWeight: 600, fontSize: 14, marginBottom: 10 }}>{item.title}</p>
             <p style={{ color: "#999", fontSize: 13, lineHeight: 1.7, margin: 0 }}>{item.body}</p>
           </div>
         ))}
       </div>
+
       <hr style={{ border: "none", borderTop: "1px solid #222", marginBottom: 48 }} />
 
-      <p style={{ color: "#444", fontSize: 13, textAlign: "center" }}>
-        section 7 in progress &mdash; check back soon
+      <h2 style={{ fontSize: 18, fontWeight: 600, color: "#fff", marginBottom: 24 }}>section 7: what scales, what breaks, and what to watch for</h2>
+      <p style={{ marginBottom: 32 }}>
+        the architecture we've described works well at small scale. the honest service to you is telling you exactly where it breaks as volume grows -- and what flags to watch before it does.
+      </p>
+
+      <p style={{ marginBottom: 8 }}><strong style={{ color: "#fff" }}>when the simple scorer stops being enough</strong></p>
+      <p style={{ marginBottom: 32 }}>
+        the rules-based decision engine (phase 4 in the build order) will carry you through the first few months. it breaks when two things happen: wallet behavior becomes too nuanced for simple rules, and false positives start costing real money. the flag to watch is your false positive rate -- the percentage of copy decisions that lose. if it climbs above 30% consistently over a 30-day period, the rules need to evolve. that's when you consider introducing a weighted scoring model, not before.
+      </p>
+
+      <p style={{ marginBottom: 8 }}><strong style={{ color: "#fff" }}>the event listener under load</strong></p>
+      <p style={{ marginBottom: 32 }}>
+        an on-chain event listener processing hundreds of wallets in near real-time is a different engineering problem than a cron job. the first stress point is throughput -- can your listener keep up with transaction volume during peak hours? the second is reliability -- what happens when the RPC connection drops mid-session? build reconnect logic and a dead-letter queue (events that failed to process) from day one. missing one event is survivable. missing a cluster of events during a high-volume window is not.
+      </p>
+
+      <p style={{ marginBottom: 8 }}><strong style={{ color: "#fff" }}>the wallet registry at scale</strong></p>
+      <p style={{ marginBottom: 40 }}>
+        SQLite handles millions of rows cleanly. it handles concurrent writes poorly. as long as only the slow lane writes to the registry and the fast lane reads from it, you're fine. the failure mode is two processes writing simultaneously -- your confidence scores corrupt silently and the system keeps running, making decisions on bad data. enforce single-writer discipline from the start. it's the same lesson the Memory Bible learned.
+      </p>
+
+      <div style={{ background: "#111", border: "1px solid #222", borderRadius: 8, padding: 24, marginBottom: 40, overflowX: "auto" }}>
+        <p style={{ color: "#888", fontSize: 11, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 16 }}>scale stress flags -- watch these as volume grows</p>
+        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+          <thead>
+            <tr style={{ borderBottom: "1px solid #333" }}>
+              <th style={{ textAlign: "left", padding: "8px 12px 8px 0", color: "#fff", fontWeight: 600 }}>milestone</th>
+              <th style={{ textAlign: "left", padding: "8px 12px", color: "#fff", fontWeight: 600 }}>what to watch</th>
+              <th style={{ textAlign: "left", padding: "8px 12px", color: "#fff", fontWeight: 600 }}>failure signal</th>
+              <th style={{ textAlign: "left", padding: "8px 0 8px 12px", color: "#fff", fontWeight: 600 }}>fix</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              ["1k+ wallets tracked", "query latency on the scorer", "decisions taking >100ms", "add SQLite indexes on confidence_score + last_updated"],
+              ["10k+ daily events", "event listener throughput", "missed events in the log", "batch processing + dead-letter queue"],
+              ["90+ days of data", "slow lane consolidation time", "nightly job taking >30 min", "partition the registry by wallet category"],
+              ["multi-chain", "cross-chain wallet identity", "same operator, different addresses", "wallet fingerprinting layer before the registry"],
+              ["real money at stake", "false positive rate climbing", ">30% copy decisions losing", "move from rules to weighted scoring model"],
+              ["high-frequency markets", "latency in the fast lane", "decision fires after window closes", "move scorer closer to the RPC node geographically"],
+            ].map(([m, w, f, x], idx) => (
+              <tr key={idx} style={{ borderBottom: "1px solid #1a1a1a" }}>
+                <td style={{ padding: "10px 12px 10px 0", color: "#e5e5e5", fontWeight: 500, fontSize: 12 }}>{m}</td>
+                <td style={{ padding: "10px 12px", color: "#999", fontSize: 12 }}>{w}</td>
+                <td style={{ padding: "10px 12px", color: "#FF453A", fontSize: 12 }}>{f}</td>
+                <td style={{ padding: "10px 0 10px 12px", color: "#666", fontSize: 12 }}>{x}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <p style={{ marginBottom: 8 }}><strong style={{ color: "#fff" }}>hardware reality</strong></p>
+      <p style={{ marginBottom: 16 }}>
+        the Memory Bible's zero-cost constraint works for the memory layer. the trading stack adds real compute requirements as it scales.
+      </p>
+      <div style={{ background: "#111", border: "1px solid #222", borderRadius: 8, padding: 24, marginBottom: 48 }}>
+        {[
+          {
+            label: "early stage (hundreds of wallets, low frequency)",
+            desc: "a standard VPS or local machine handles it. the same Beelink-class mini PC that runs a personal AI assistant can run phases 1-4."
+          },
+          {
+            label: "mid scale (thousands of wallets, multiple chains)",
+            desc: "dedicated compute for the event listener. latency matters. proximity to RPC nodes matters. a $20-40/month cloud instance near your RPC provider is the right move."
+          },
+        ].map((item, idx) => (
+          <div key={idx} style={{ marginBottom: idx === 0 ? 16 : 0 }}>
+            <p style={{ color: "#fff", fontWeight: 600, fontSize: 13, marginBottom: 6 }}>{item.label}</p>
+            <p style={{ color: "#999", fontSize: 13, margin: 0, lineHeight: 1.7 }}>{item.desc}</p>
+          </div>
+        ))}
+      </div>
+
+      <hr style={{ border: "none", borderTop: "1px solid #222", marginBottom: 48 }} />
+
+      <p style={{ marginBottom: 24, fontSize: 15, lineHeight: 1.8 }}>
+        the Memory Bible was built to solve a real problem, documented honestly, and revised seven times. that's the kind of work worth engaging with seriously -- and we hope this response did it justice.
+      </p>
+      <p style={{ marginBottom: 24, fontSize: 15, lineHeight: 1.8 }}>
+        if you're building in this space -- whether it's AI context management, on-chain intelligence, or something in between -- and you want to think through the architecture together, we're genuinely interested. not as a pitch. as builders who find these problems worth solving.
+      </p>
+      <p style={{ marginBottom: 48, fontSize: 15, lineHeight: 1.8 }}>
+        reach out. tell us what you're working on. we'd love to build together.
       </p>
 
       <div style={{ marginTop: 64, paddingTop: 32, borderTop: "1px solid #1a1a1a" }}>

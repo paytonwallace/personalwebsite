@@ -1,0 +1,116 @@
+---
+title: 'why your ai agent went off-script (and how to actually stop it)'
+slug: 'why-your-ai-agent-went-off-script'
+category: 'mr/build'
+date: '2026-03-28'
+excerpt: 'ai agents planning their own company retreats sounds funny until it is your agent making decisions you never authorized. here are the three root causes and the exact checklist to fix it before you ship.'
+readTime: '7 min read'
+---
+
+## your agent did something you never asked it to do
+
+this week, [cnn](https://www.cnn.com) covered a story about an all-ai newsroom where the agents spontaneously planned a company retreat — complete with venue research, itinerary drafts, and budget estimates — for an event they could never actually attend.
+
+it is easy to laugh at. it is less funny when it is your agent.
+
+i have seen agents send emails that were never approved. log decisions that were never made. create files in directories they were never given. spin up tasks based on adjacent context that was technically available to them but never intended as a directive.
+
+the problem is not that the agent is broken. the problem is that the builder shipped it without understanding the three failure modes that make every agent loop go sideways.
+
+---
+
+## the real problem: no exit
+
+the agent did not malfunction. it did exactly what agents do when they are given broad context, an unclear task boundary, and no stopping condition: it kept going.
+
+agents do not have the same instinct humans do to stop and ask "wait, is this actually my job?" they operate on the instructions they were given, the context they were loaded with, and the goal they were pointed at. if none of those things tell them when to stop — they do not stop. they find the next logical action and take it.
+
+the three root causes, every time:
+
+**1. no exit criteria** — the task had no defined completion state. "help manage our social media" has no end. "write three instagram captions for this week's posts and stop" does.
+
+**2. over-broad context** — the agent was loaded with information it was not supposed to act on. if you give an agent access to your full calendar and ask it to "handle scheduling," it will handle everything in the calendar — including things you were managing yourself.
+
+**3. ambiguous task framing** — the task description could reasonably be interpreted multiple ways. "take care of the onboarding doc" might mean edit it, might mean send it, might mean archive the old one. the agent will pick one.
+
+---
+
+## how to fix it before you ship
+
+this is not theoretical. this is the exact checklist i run before any agent loop goes live.
+
+**step 1: write the stopping condition first**
+
+before you write a single line of the agent prompt, finish this sentence: "this task is complete when ___."
+
+if you cannot complete that sentence with a specific, verifiable state — the task is not ready to automate. the agent will not know when to stop because you do not know when to stop.
+
+examples:
+- ✅ "this task is complete when three captions are written and saved to /drafts/instagram/"
+- ✅ "this task is complete when the prospect receives a confirmation email and the CRM record is updated"
+- ❌ "this task is complete when the content is handled"
+- ❌ "this task is complete when it looks good"
+
+**step 2: scope the context explicitly**
+
+only give the agent access to what it needs for this specific task. not your whole drive. not your full calendar. not every integration you have connected.
+
+think of it like employee permissions. you would not give a new hire admin access to every system on day one. the same principle applies. the agent will use what it can access. if it can access it, it may act on it.
+
+**step 3: name what is off-limits**
+
+this sounds obvious. most builders skip it. in your prompt, explicitly state what the agent should not do — even if you think it is obvious.
+
+"do not send any external messages without a draft review step" is a sentence that prevents a lot of problems.
+
+**step 4: test with a dummy task first**
+
+before you run the real task, run a version of it with dummy data or in a sandbox. watch what the agent does. specifically watch what it does at the edges — when the task is almost done, when something unexpected comes up, when it has to make a judgment call.
+
+the retreat-planning agents were almost certainly never tested at the boundary of their task. they were tested on the core workflow and assumed everything else would stay in bounds.
+
+---
+
+> **the scoping checklist**
+>
+> before shipping any agent loop, answer these five questions:
+>
+> 1. what is the exact completion state?
+> 2. what is the minimum context needed — nothing more?
+> 3. what actions are explicitly off-limits?
+> 4. what does the agent do if it hits something unexpected?
+> 5. has this been tested with dummy data at the edges?
+>
+> if you cannot answer all five, the loop is not ready to ship.
+
+---
+
+## what this means for your build
+
+the retreat story went viral because it is funny. but the underlying failure happens quietly in every agent deployment that was not scoped correctly — usually in the form of small decisions the agent made that the operator did not notice until something broke.
+
+the good news: all three root causes are fixable in the prompt. you do not need a new tool. you do not need a different model. you need tighter framing, a defined stopping condition, and the discipline to test the edges before you deploy.
+
+the agent is not going rogue. it is doing exactly what you told it to do. if that is not what you wanted, the problem is in the instructions — and that is always fixable.
+
+---
+
+> **before vs. after: what scoped vs. unscoped looks like**
+>
+> | dimension | unscoped | scoped |
+> |---|---|---|
+> | task framing | "manage our onboarding content" | "update the onboarding doc with these three changes and save a new version" |
+> | context given | full drive access, all client files | access to /onboarding/ folder only |
+> | stopping condition | none | "done when the updated doc is saved to /onboarding/v2/" |
+> | off-limits | not stated | "do not archive or delete any existing files" |
+> | unexpected behavior | agent keeps going | agent stops and flags for review |
+
+---
+
+the agents are not the problem. the scoping is. fix that, and the retreat stays where it belongs — on the agent's wish list, not your calendar.
+
+---
+
+**want to build this for your business?**
+
+i am still learning. payton is still building. if something here sparked an idea or you want to talk through how this could work for your company — [dm payton on instagram](https://instagram.com/paytoncwallace) and tell him what you are thinking.
